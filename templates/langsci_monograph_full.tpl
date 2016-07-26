@@ -138,7 +138,6 @@
 										</div>
 									{/if}
 								</div>
-							<!-- TODO: {$chapter->getViewableFiles()} -->
 								{assign var=chapterAuthors value=$chapter->getAuthorNamesAsString()}
 								{if $publishedMonograph->getAuthorString() != $chapterAuthors}
 									<div class="authors">
