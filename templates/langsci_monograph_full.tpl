@@ -62,10 +62,8 @@
  * @uses $currency Currency The Currency object representing the press's currency, if configured.
  *}
  
- 
 <!-- langsci: javascript function to load vgwort pixel on click -->
- 
- <script type="text/javascript">
+<script type="text/javascript">
 
 	// vg wort
 	function addPixel(id){ldelim}
@@ -76,11 +74,6 @@
 	
 </script>
  
- 
- <!-- css -->
-<link rel="stylesheet" href="{$baseUrl}/plugins/generic/bookPage/BookPagePlugin.css" type="text/css" />
-
- 
 <div class="obj_monograph_full">
 	<h1 class="title">
 		{$monograph->getLocalizedFullTitle()|escape}
@@ -89,6 +82,16 @@
 	<div class="row">
 		<div class="main_entry">
 
+		
+			<div class="item abstract">
+				<h3 class="label">
+					{translate key="submission.synopsis"}
+				</h3>
+				<div class="value">
+					{$publishedMonograph->getLocalizedAbstract()|strip_unsafe_html}
+				</div>
+			</div>
+		
 			<div class="item authors">
 				{foreach from=$publishedMonograph->getAuthors() item=author}
 					{if $author->getIncludeInBrowse()}
@@ -112,60 +115,77 @@
 				{/foreach}
 			</div>
 
-			<div class="item abstract">
-				<h3 class="label">
-					{translate key="submission.synopsis"}
-				</h3>
-				<div class="value">
-					{$publishedMonograph->getLocalizedAbstract()|strip_unsafe_html}
-				</div>
-			</div>
-
 			{if $chapters|@count}
 				<div class="item chapters">
-					<!--<h3 class="pkp_screen_reader">-->
-					<h3 class="label">
+					<h3 class="pkp_screen_reader">
 						{translate key="submission.chapters"}
 					</h3>
 					<ul>
 						{foreach from=$chapters item=chapter}
+						
+							{assign var=chapterId value=$chapter->getId()}
+							
 							<li>
 								<div class="title">
 									{$chapter->getLocalizedTitle()}
+									
 									{if $chapter->getLocalizedSubtitle() != ''}
 										<div class="subtitle">
 											{$chapter->getLocalizedSubtitle()|escape}
 										</div>
 									{/if}
 								</div>
+								
+								
 								{assign var=chapterAuthors value=$chapter->getAuthorNamesAsString()}
 								{if $publishedMonograph->getAuthorString() != $chapterAuthors}
 									<div class="authors">
 										{$chapterAuthors|escape}
 									</div>
 								{/if}
+								
+								{* Display any files that are assigned to this chapter *}
+								{if $chapterFiles[$chapterId]|@count}
+									<div class="files">
+										{foreach from=$chapterFiles[$chapterId] key=pubFormatId item=pubFormatFiles}
+
+											{* By default, use the publication format name in the download link *}
+											{foreach from=$publicationFormats item=publicationFormat}
+												{if $publicationFormat->getId() == $pubFormatId}
+													{assign var=downloadName value=$publicationFormat->getLocalizedName()}
+												{/if}
+											{/foreach}
+
+											{foreach from=$pubFormatFiles item=file}
+
+												{* If a publication format has more than one file, use the file name in the download link *}
+												{if $downloadName == '' || $pubFormatFiles|@count > 1}
+													{assign var=downloadName value=$file->getLocalizedName()}
+												{/if}
+
+												{* Generate the download URL *}
+												{if $file->getDocumentType()==$smarty.const.DOCUMENT_TYPE_PDF}
+													{url|assign:downloadUrl op="view" path=$monograph->getId()|to_array:$publicationFormatId:$file->getFileIdAndRevision()}
+												{else}
+													{url|assign:downloadUrl op="download" path=$monograph->getId()|to_array:$publicationFormatId:$file->getFileIdAndRevision()}
+												{/if}
+
+												{* Display the download link *}
+												<a href="{$downloadUrl}" class="download {$file->getDocumentType()|escape}">
+													{$downloadName}
+												</a>
+											{/foreach}
+										{/foreach}
+									</div>
+								{/if}
+								
+								
 							</li>
 						{/foreach}
 					</ul>
 				</div>
 			{/if}
 			
-			{* langsci statistics *}
-			{* todo: use hook with plugin *}
-			{* todo: add check, if image exists *}
-			
-			{*{assign var=imagePath value="/plugins/generic/bookPage/img/"}*}
-			{assign var=imagePath value="/public/stats/"}
-			
-			<div class="statistics">
-				<h3 class="label">{translate key="plugins.generic.bookPage.statistics"}</h3>
-				<div class="value">
-					<a href="{$baseUrl}{$imagePath}{$publishedMonograph->getId()}{".svg"}">
-						<img class="pkp_helpers_container_center" alt="{$publishedMonograph->getLocalizedFullTitle()|escape}" src="{$baseUrl}{$imagePath}{$publishedMonograph->getId()}{".svg"}" width="100%" />
-					</a>
-				</div>	
-			</div>
-
 			{call_hook name="Templates::Catalog::Book::Main"}
 
 		</div><!-- .main_entry -->
@@ -174,7 +194,7 @@
 
 			{* Cover image *}
 			<div class="item cover">
-				<img alt="{translate key="catalog.coverImageTitle" monographTitle=$monograph->getLocalizedFullTitle()|strip_tags|escape}" src="{url router=$smarty.const.ROUTE_COMPONENT component="submission.CoverHandler" op="cover" submissionId=$monograph->getId() random=$monograph->getId()|uniqid}" />
+				<img alt="{translate key="catalog.coverImageTitle" monographTitle=$monograph->getLocalizedFullTitle()|strip_tags|escape}" src="{url router=$smarty.const.ROUTE_COMPONENT component="submission.CoverHandler" op="thumbnail" submissionId=$monograph->getId() random=$monograph->getId()|uniqid}" />
 			</div>
 
 			{* Sharing code *}
@@ -185,77 +205,80 @@
 			{/if}
 
 			{* Files and remote resources *}
-			
 			{if $availableFiles|@count || $remoteResources|@count}
 				<div class="item files">
 					{assign var=publicationFormats value=$publishedMonograph->getPublicationFormats()}
 					{foreach from=$publicationFormats item=publicationFormat}
-						{assign var=publicationFormatId value=$publicationFormat->getId()}
-						{if $publicationFormat->getIsAvailable() && $remoteResources[$publicationFormatId]}
-							{* Only one resource allowed per format, so mimic single-file-download *}
-							<div class="pub_format_{$publicationFormatId|escape} pub_format_remote">
-								<a href="{$publicationFormat->getRemoteURL()|escape}" target="_blank" class="remote_resource">
-									{$publicationFormat->getLocalizedName()|escape}
-								</a>
-							</div>
-						{elseif $publicationFormat->getIsAvailable() && $availableFiles[$publicationFormatId]}
-
-							{* Use a simplified presentation if only one file exists *}
-							{if $availableFiles[$publicationFormatId]|@count == 1}
-								<div class="pub_format_{$publicationFormatId|escape} pub_format_single">
-									{foreach key=id from=$availableFiles[$publicationFormatId] item=availableFile}
-										{if $availableFile->getDocumentType()==$smarty.const.DOCUMENT_TYPE_PDF}
-											{url|assign:downloadUrl op="view" path=$publishedMonograph->getId()|to_array:$publicationFormatId:$availableFile->getFileIdAndRevision()}
-										{else}
-											{url|assign:downloadUrl op="download" path=$publishedMonograph->getId()|to_array:$publicationFormatId:$availableFile->getFileIdAndRevision()}
-										{/if}
-										<a href="{$downloadUrl}" class="{$availableFile->getDocumentType()|escape}"  onclick="addPixel({$publicationFormatId}{$id});">
-											{if $availableFile->getDirectSalesPrice()}
-												{translate key="payment.directSales.purchase" format=$publicationFormat->getLocalizedName() amount=$currency->format($availableFile->getDirectSalesPrice()) currency=$currency->getCodeAlpha()}
-											{else}
-												{translate key="payment.directSales.download" format=$publicationFormat->getLocalizedName()}
-												{* @todo make the open access icon appear *}
-											{/if}
-										</a>
-										<div id="vgwpixel{$publicationFormatId}{$id}"></div> 
-									{/foreach}
-								</div>
-
-							{* Use an itemized presentation if multiple files exists *}
-							{else}
-								<div class="pub_format_{$publicationFormatId|escape}">
-									<span class="label">
+					
+						{* LangSci: Display all files but chapters, do not display PDF-OR *}
+						{if !$publicationFormat->getLocalizedName()|strstr:"Chapter" && $publicationFormat->getLocalizedName()!="PDF-OR"}
+						
+							{assign var=publicationFormatId value=$publicationFormat->getId()}
+							{if $publicationFormat->getIsAvailable() && $remoteResources[$publicationFormatId]}
+								{* Only one resource allowed per format, so mimic single-file-download *}
+								<div class="pub_format_{$publicationFormatId|escape} pub_format_remote">
+									<a href="{$publicationFormat->getRemoteURL()|escape}" target="_blank" class="remote_resource">
 										{$publicationFormat->getLocalizedName()|escape}
-									</span>
-									<span class="value">
-										<ul>
-											{* There will be at most one of these *}
-											{foreach key=id from=$availableFiles[$publicationFormatId] item=availableFile}
-												<li>
-													<span class="name">
-														{$availableFile->getLocalizedName()|escape}
-													</span>
-													<span class="link">
-														{if $availableFile->getDocumentType()==$smarty.const.DOCUMENT_TYPE_PDF}
-															{url|assign:downloadUrl op="view" path=$publishedMonograph->getId()|to_array:$publicationFormatId:$availableFile->getFileIdAndRevision()}
-														{else}
-															{url|assign:downloadUrl op="download" path=$publishedMonograph->getId()|to_array:$publicationFormatId:$availableFile->getFileIdAndRevision()}
-														{/if}
-														<a href="{$downloadUrl}" class="{$availableFile->getDocumentType()}" onclick="addPixel({$publicationFormatId}{$id});">
-															{if $availableFile->getDirectSalesPrice()}
-																{translate key="payment.directSales.purchase" format=$publicationFormat->getLocalizedName() amount=$currency->format($availableFile->getDirectSalesPrice()) currency=$currency->getCodeAlpha()}
-															{else}
-																{translate key="payment.directSales.download" format=$publicationFormat->getLocalizedName()}
-																{* @todo make the open access icon appear *}
-															{/if}
-														</a>
-													</span>
-												</li>
-												<div id="vgwpixel{$publicationFormatId}{$id}"></div> 
-											{/foreach}
-										</ul>
-									</span><!-- .value -->
+									</a>
 								</div>
+							{elseif $publicationFormat->getIsAvailable() && $availableFiles[$publicationFormatId]}
+
+								{* Use a simplified presentation if only one file exists *}
+								{if $availableFiles[$publicationFormatId]|@count == 1}
+									<div class="pub_format_{$publicationFormatId|escape} pub_format_single">
+										{foreach from=$availableFiles[$publicationFormatId] item=availableFile}
+											{if $availableFile->getDocumentType()==$smarty.const.DOCUMENT_TYPE_PDF}
+												{url|assign:downloadUrl op="view" path=$publishedMonograph->getId()|to_array:$publicationFormatId:$availableFile->getFileIdAndRevision()}
+											{else}
+												{url|assign:downloadUrl op="download" path=$publishedMonograph->getId()|to_array:$publicationFormatId:$availableFile->getFileIdAndRevision()}
+											{/if}
+											<a href="{$downloadUrl}" class="{$availableFile->getDocumentType()|escape}" onclick="addPixel({$publicationFormatId}{$id});">
+												{if $availableFile->getDirectSalesPrice()}
+													{translate key="payment.directSales.purchase" format=$publicationFormat->getLocalizedName() amount=$currency->format($availableFile->getDirectSalesPrice()) currency=$currency->getCodeAlpha()}
+												{else}
+													{translate key="payment.directSales.download" format=$publicationFormat->getLocalizedName()}
+													{* @todo make the open access icon appear *}
+												{/if}
+											</a>
+											<div id="vgwpixel{$publicationFormatId}{$id}"></div> 
+										{/foreach}
+									</div>
+
+								{* Use an itemized presentation if multiple files exists *}
+								{else}
+									<div class="pub_format_{$publicationFormatId|escape}">
+										<span class="label">
+											{$publicationFormat->getLocalizedName()|escape}
+										</span>
+										<span class="value">
+											<ul>
+												{* There will be at most one of these *}
+												{foreach from=$availableFiles[$publicationFormatId] item=availableFile}
+													<li>
+														<span class="name">
+															{$availableFile->getLocalizedName()|escape}
+														</span>
+														<span class="link">
+															{if $availableFile->getDocumentType()==$smarty.const.DOCUMENT_TYPE_PDF}
+																{url|assign:downloadUrl op="view" path=$publishedMonograph->getId()|to_array:$publicationFormatId:$availableFile->getFileIdAndRevision()}
+															{else}
+																{url|assign:downloadUrl op="download" path=$publishedMonograph->getId()|to_array:$publicationFormatId:$availableFile->getFileIdAndRevision()}
+															{/if}
+															<a href="{$downloadUrl}" class="{$availableFile->getDocumentType()}">
+																{if $availableFile->getDirectSalesPrice()}
+																	{translate key="payment.directSales.purchase" format=$publicationFormat->getLocalizedName() amount=$currency->format($availableFile->getDirectSalesPrice()) currency=$currency->getCodeAlpha()}
+																{else}
+																	{translate key="payment.directSales.download" format=$publicationFormat->getLocalizedName()}
+																	{* @todo make the open access icon appear *}
+																{/if}
+															</a>
+														</span>
+													</li>
+												{/foreach}
+											</ul>
+										</span><!-- .value -->
+									</div>
+								{/if}
 							{/if}
 						{/if}
 					{/foreach}
@@ -374,7 +397,7 @@
 								{foreach from=$identificationCodes item=identificationCode}
 									<div class="sub_item identification_code">
 										<div class="label">
-											{$identificationCode->getNameForONIXCode()|escape}
+											{$identificationCode->getNameForONIXCode()|regex_replace:"/\([0-9][0-9]\)/":""}
 										</div>
 										<div class="value">
 											{$identificationCode->getValue()|escape}
@@ -388,7 +411,7 @@
 								{foreach from=$publicationDates item=publicationDate}
 									<div class="sub_item date">
 										<div class="label">
-											{$publicationDate->getNameForONIXCode()|regex_replace:"/\([0-9]\)/":""} {*regex_replace:"/[0-9]/","(",")":""*}
+											{$publicationDate->getNameForONIXCode()|regex_replace:"/\([0-9][0-9]\)/":""}
 										</div>
 										<div class="value">
 											{assign var=dates value=$publicationDate->getReadableDates()}

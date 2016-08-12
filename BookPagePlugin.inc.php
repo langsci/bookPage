@@ -33,40 +33,18 @@ class BookPagePlugin extends GenericPlugin {
 		$request = $this->getRequest();
 		$templateMgr =& $args[0];
 		$template =& $args[1];
-
+	
 		switch ($template) {
 			
 			case 'frontend/pages/book.tpl':
+						
+				$file = fopen("testfile.txt", "a");
+				fwrite($file, $testFile);
 			
 				// replace the template book.tpl wich includes the template monograph_full.tpl
 				$templateMgr->display($this->getTemplatePath() . 'langsci_book.tpl', 'text/html', 'TemplateManager::display');
 				return true;
 
-			/*	case 'frontend/pages/index.tpl':	
-
-				if (PluginRegistry::getPlugin('generic', 'slidercontentplugin')) {
-					import('plugins.generic.sliderContent.classes.SliderContentDAO');
-					$sliderContentDao = new SliderContentDao();
-					$contentArray = $sliderContentDao->getAllContent($request->getPress()->getId());
-
-					$content='';
-					foreach ($contentArray as $value) {
-						$content.= "<div class='slider-container'>";
-						$content.= $value;
-						$content.= "</div>";
-					}
-					$templateMgr->assign('content',$content);
-				}
-				
-
-				$templateMgr->assign('title',__('plugins.generic.bookPage.title'));
-				$templateMgr->assign('baseUrl',$request->getBaseUrl());
-
-				$templateMgr->display($this->getTemplatePath() . 
-					'home.tpl', 'text/html', 'TemplateManager::display');
-
-			return true;
-			*/
 		}
 		return false;
 	}
