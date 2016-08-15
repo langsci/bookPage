@@ -190,6 +190,26 @@
 				</div>
 			{/if}
 			
+			
+			{* langsci statistics *}
+			{* todo: add check, if image exists *}
+			
+			{*{assign var=imagePath value="/plugins/generic/bookPage/img/"}*}
+			{assign var=imagePath value="/public/stats/"}
+			
+			{if $statImageExists} 
+			
+				<div class="statistics">
+					<h3 class="label">{translate key="plugins.generic.bookPage.statistics"}</h3>
+					<div class="value">
+						<a href="{$baseUrl}{$imagePath}{$publishedMonograph->getId()}{'.svg'}">
+							<img class="pkp_helpers_container_center" alt="{$publishedMonograph->getLocalizedFullTitle()|escape}" src="{$baseUrl}{$imagePath}{$publishedMonograph->getId()}{'.svg'}" width="100%" />
+						</a>
+					</div>	
+				</div>
+			
+			{/if}
+			
 			{call_hook name="Templates::Catalog::Book::Main"}
 
 		</div><!-- .main_entry -->

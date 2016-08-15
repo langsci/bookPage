@@ -38,9 +38,23 @@ class BookPagePlugin extends GenericPlugin {
 			
 			case 'frontend/pages/book.tpl':
 						
-				$file = fopen("testfile.txt", "a");
-				fwrite($file, $testFile);
-			
+				// testing
+			//	$file = fopen("testfile.txt", "a");
+			//	fwrite($file, $publishedMonographId);
+				
+				// variables
+				$publishedMonograph = $templateMgr->get_template_vars('publishedMonograph'); // get variable publishedMonograph from template 
+				$contextId = $publishedMonograph->getContextId(); 
+				$publishedMonographId = $publishedMonograph->getId();
+				
+			//	$request = $this->getRequest();
+			//	$baseUrl = $request->getBaseUrl();
+			//	$pluginPath = $this->getPluginPath();
+				
+				// statistics: is there a statistic image of this book? statImageExists as variable given to the template 
+				$imagePath = 'C:/xampp/htdocs/langsci-dev/public/stats/';
+				$templateMgr->assign('statImageExists', file_exists(realpath($imagePath.$publishedMonographId.'.svg')));
+
 				// replace the template book.tpl wich includes the template monograph_full.tpl
 				$templateMgr->display($this->getTemplatePath() . 'langsci_book.tpl', 'text/html', 'TemplateManager::display');
 				return true;
