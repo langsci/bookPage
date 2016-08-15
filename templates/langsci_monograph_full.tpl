@@ -115,6 +115,8 @@
 				{/foreach}
 			</div>
 
+			
+			{* Chapters *}
 			{if $chapters|@count}
 				<div class="item chapters">
 					<h3 class="pkp_screen_reader">
@@ -147,11 +149,11 @@
 								{* Display any files that are assigned to this chapter *}
 								{if $chapterFiles[$chapterId]|@count}
 									<div class="files">
-										{foreach from=$chapterFiles[$chapterId] key=pubFormatId item=pubFormatFiles}
+										{foreach from=$chapterFiles[$chapterId] key=publicationFormatId item=pubFormatFiles}
 
 											{* By default, use the publication format name in the download link *}
 											{foreach from=$publicationFormats item=publicationFormat}
-												{if $publicationFormat->getId() == $pubFormatId}
+												{if $publicationFormat->getId() == $publicationFormatId}
 													{assign var=downloadName value=$publicationFormat->getLocalizedName()}
 												{/if}
 											{/foreach}
@@ -171,9 +173,11 @@
 												{/if}
 
 												{* Display the download link *}
-												<a href="{$downloadUrl}" class="download {$file->getDocumentType()|escape}">
-													{$downloadName}
+												<a href="{$downloadUrl}" class="download {$file->getDocumentType()|escape}" onclick="addPixel({$publicationFormatId}{$id});">
+													{translate key="payment.directSales.download" format=''} {$downloadName}
 												</a>
+												
+												<div id="vgwpixel{$publicationFormatId}{$id}"></div> 
 											{/foreach}
 										{/foreach}
 									</div>
@@ -210,18 +214,29 @@
 					{assign var=publicationFormats value=$publishedMonograph->getPublicationFormats()}
 					{foreach from=$publicationFormats item=publicationFormat}
 					
-						{* LangSci: Display all files but chapters, do not display PDF-OR *}
-						{if !$publicationFormat->getLocalizedName()|strstr:"Chapter" && $publicationFormat->getLocalizedName()!="PDF-OR"}
+						{assign var=publicationFormatId value=$publicationFormat->getId()}
+							
+						{* Remote resources *}
+						{if $publicationFormat->getIsAvailable() && $remoteResources[$publicationFormatId]}
+							{* Only one resource allowed per format, so mimic single-file-download *}
+							<div class="pub_format_{$publicationFormatId|escape} pub_format_remote">
+								<a href="{$publicationFormat->getRemoteURL()|escape}" target="_blank" class="remote_resource">
+									{$publicationFormat->getLocalizedName()|escape}
+								</a>
+							</div>
+							
+						{* File downloads *}
+						{* LangSci: do not display PDF-OR *}
+						{elseif $publicationFormat->getIsAvailable() && $availableFiles[$publicationFormatId] && $publicationFormat->getLocalizedName()!="PDF-OR"}
 						
-							{assign var=publicationFormatId value=$publicationFormat->getId()}
-							{if $publicationFormat->getIsAvailable() && $remoteResources[$publicationFormatId]}
-								{* Only one resource allowed per format, so mimic single-file-download *}
-								<div class="pub_format_{$publicationFormatId|escape} pub_format_remote">
-									<a href="{$publicationFormat->getRemoteURL()|escape}" target="_blank" class="remote_resource">
-										{$publicationFormat->getLocalizedName()|escape}
-									</a>
-								</div>
-							{elseif $publicationFormat->getIsAvailable() && $availableFiles[$publicationFormatId]}
+							{* Skip any formats that have no non-chapter files, because these will have already been displayed *}
+							{assign var=hasRemainingFiles value=false}
+							{foreach from=$availableFiles[$publicationFormatId] item=availableFile}
+								{if !method_exists($availableFile, 'getChapterId') || $availableFile->getChapterId() == ''}
+									{assign var=hasRemainingFiles value=true}
+								{/if}
+							{/foreach}
+							{if $hasRemainingFiles}
 
 								{* Use a simplified presentation if only one file exists *}
 								{if $availableFiles[$publicationFormatId]|@count == 1}
@@ -280,7 +295,7 @@
 									</div>
 								{/if}
 							{/if}
-						{/if}
+						{/if} 
 					{/foreach}
 				</div>
 			{/if}
