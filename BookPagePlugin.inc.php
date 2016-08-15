@@ -52,11 +52,18 @@ class BookPagePlugin extends GenericPlugin {
 			//	$pluginPath = $this->getPluginPath();
 				
 				// statistics: is there a statistic image of this book? statImageExists as variable given to the template 
+				// TODO: add imagePath to plugin settings
 				$imagePath = 'C:/xampp/htdocs/langsci-dev/public/stats/';
 				$templateMgr->assign('statImageExists', file_exists(realpath($imagePath.$publishedMonographId.'.svg')));
 
 				// replace the template book.tpl wich includes the template monograph_full.tpl
 				$templateMgr->display($this->getTemplatePath() . 'langsci_book.tpl', 'text/html', 'TemplateManager::display');
+				return true;
+				
+			case 'frontend/pages/catalog.tpl':
+			
+				// replace the template book.tpl wich includes the template monograph_full.tpl
+				$templateMgr->display($this->getTemplatePath() . 'langsci_catalog.tpl', 'text/html', 'TemplateManager::display');
 				return true;
 
 		}
