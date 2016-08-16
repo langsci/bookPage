@@ -73,6 +73,9 @@
 	{rdelim}
 	
 </script>
+
+<!-- langsci: css for font awesome - used for github icon -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
  
 <div class="obj_monograph_full">
 	<h1 class="title">
@@ -188,32 +191,31 @@
 						{/foreach}
 					</ul>
 				</div>
-			{/if}
+			{/if}	
 			
 			{* langsci reviews *}
 			
 			{if $reviewlink}
-				<div class="langsci_review">
+				<div class="item langsci_review">
 					<h3 class="label">{translate key="plugins.generic.bookPage.reviews"}</h3>
 					
 					{* TODO: get all reviews*}
 		
-						<ul>
-							<li>
-								<a href="{$reviewlink}">
-									{$reviewdescription}
-								</a>
-								{if $reviewauthor}
-									by {$reviewauthor}
-								{/if}
-								{if $reviewdate}
-									published {$reviewdate}
-								{/if}
-							</li>
-						</ul>
-					
+					<ul>
+						<li>
+							<a href="{$reviewlink}">
+								{$reviewdescription}
+							</a>
+							{if $reviewauthor}
+								by {$reviewauthor}
+							{/if}
+							{if $reviewdate}
+								published {$reviewdate}
+							{/if}
+						</li>
+					</ul>
 				</div>
-				<br>
+
 			{/if}
 			
 			
@@ -223,7 +225,7 @@
 			{assign var=imagePath value="/public/stats/"}
 			
 			{if $statImageExists} 
-				<div class="statistics">
+				<div class="item langsci_statistics">
 					<h3 class="label">{translate key="plugins.generic.bookPage.statistics"}</h3>
 					<div class="value">
 						<a href="{$baseUrl}{$imagePath}{$publishedMonograph->getId()}{'.svg'}">
@@ -340,8 +342,16 @@
 							{/if}
 						{/if} 
 					{/foreach}
-				</div>
-			{/if}
+					
+				</div> <!-- files -->
+				
+			{* langsci view the code on github *}
+			<div class="item langsci_github">
+				{translate key="plugins.generic.bookPage.latexSource.text"}
+				 <a href={"https://github.com/langsci/"}{$publishedMonograph->getId()} target="blank" title="{translate key="plugins.generic.bookPage.latexSource.title"}">{translate key="plugins.generic.bookPage.latexSource.link"}</a> <i class="fa fa-github"></i>
+			</div>
+			
+			{/if} <!-- available files -->
 
 			{* Series *}
 			{if $series}
