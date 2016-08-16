@@ -29,6 +29,6 @@
 	<!-- settings -->
 	<message key="plugins.generic.bookPage.settings.title">Settings</message>
 	<message key="plugins.generic.bookPage.form.imagePath">Path to the stats images</message>
-	<message key="plugins.generic.bookPage.form.imagePath.label">Please enter the complete path to the folder that contains the statistic images (e.g. C:/xampp/htdocs/yourInstallation/public/stats/)</message>
+	<message key="plugins.generic.bookPage.form.imagePath.label">Please enter the path to the folder that contains the statistic images (e.g. /public/stats/)</message>
 
 </locale>

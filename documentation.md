@@ -16,7 +16,7 @@ This plugin replaces templates for the catalog and the book page in OMP.
 
  * hidden series postion of the book at the catalog view
  * changed cover display method to show a bigger image
- * display of statistic svg images (public/stats) at book page 
+ * display of statistic svg images (public/stats) at book page - path to image folder in the plugin setting (e.g. /public/stats/)
  * vg wort pixel added to download links
  * changes from Nate https://github.com/pkp/pkp-lib/issues/1428 to connect chapter and downloads at book page n.
  * link to gitHub repo at book page 
@@ -53,8 +53,8 @@ Templates
 
 Database access, server access
 -----------------------------
-- reading access to OMP tables: 0
-- writing access to OMP tables: 0
+- reading access to OMP tables: yes (setting)
+- writing access to OMP tables: yes (setting)
 - new tables: 0
 - nonrecurring server access: no
 - recurring server access: no
@@ -76,7 +76,8 @@ Classes, plugins, external software
 - use of external software: no
 - file upload: yes
 		
-		statistics images has to be uploaded to public/downloads/stats as svg files
+		statistics images (svg) has to be uploaded to a folder
+		enter path in plugin settings like public/stats/
  
 Metrics
 --------
@@ -85,7 +86,7 @@ Metrics
 
 Settings
 --------
-- settings: no
+- settings: yes
 
 Plugin category
 ----------
