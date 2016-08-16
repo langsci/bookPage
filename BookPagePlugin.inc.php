@@ -75,6 +75,9 @@ class BookPagePlugin extends GenericPlugin {
 				$templateMgr->assign('statImageExists', file_exists(realpath($baseDir.$imagePath.$publishedMonographId.'.svg')));
 				$templateMgr->assign('imagePath', $imagePath);
 			
+			
+				/*** reviews ***/
+			
 				// get review links from the catalog entry tab plugin 
 				if(null!==($catalogEntryTabDao->getLink($publishedMonographId,"reviewdescription"))){
 					$templateMgr->assign('reviewdescription', $catalogEntryTabDao->getLink($publishedMonographId,"reviewdescription"));
@@ -89,6 +92,12 @@ class BookPagePlugin extends GenericPlugin {
 					$templateMgr->assign('reviewdate', $catalogEntryTabDao->getLink($publishedMonographId,"reviewdate"));
 				}
 				
+				
+				/*** vg wort ***/
+				
+				// generate imageUrl for VG Wort and save it as template variable
+				$templateMgr->assign('imageUrl', $this->createVgWortUrl($contextId, $publishedMonographId));
+				
 				// replace the template book.tpl wich includes the template monograph_full.tpl
 				$templateMgr->display($this->getTemplatePath() . 'langsci_book.tpl', 'text/html', 'TemplateManager::display');
 				return true;
@@ -102,6 +111,34 @@ class BookPagePlugin extends GenericPlugin {
 		}
 		return false;
 	}
+	
+	
+	/**
+	 * Create the url for the vg wort pixel image with the domain and the public code
+	 * @param $contextId int The id of the press
+	 * @param $publishedMonographId int The id of the book
+	 * @return $imageUrl string The url of the vg wort pixel image 
+	 */
+	function createVgWortUrl($contextId, $publishedMonographId){
+		
+		// get the assigned pixel tag of the book
+		$pixelTagDao = DAORegistry::getDAO('PixelTagDAO');
+		$pixelTagObject = $pixelTagDao->getPixelTagBySubmissionId($contextId, $publishedMonographId);
+		
+		if($pixelTagObject){
+			
+			$pixelTag = $pixelTagDao->getPixelTag($pixelTagObject->getId());
+			
+			// create url
+			$imageUrl = 'http://' . $pixelTag->getDomain() . '/na/' . $pixelTag->getPublicCode();
+			
+			return $imageUrl;
+			
+		}else return '';
+		
+	}
+	
+	
 
 	/**
 	 * @copydoc PKPPlugin::getDisplayName()
