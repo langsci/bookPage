@@ -227,12 +227,7 @@
 
 			{/if}
 			
-			
 			{* langsci statistics *}
-			
-			{* TODO: get imagepath from setting *}
-			{assign var=imagePath value="/public/stats/"}
-			
 			{if $statImageExists} 
 				<div class="item langsci_statistics">
 					<h3 class="label">{translate key="plugins.generic.bookPage.statistics"}</h3>
@@ -354,14 +349,14 @@
 					
 				</div> <!-- files -->
 				
-			{* langsci view the code on github *}
-			<div class="item langsci_github">
-				{translate key="plugins.generic.bookPage.latexSource.text"}
-				 <a href={"https://github.com/langsci/"}{$publishedMonograph->getId()} target="blank" title="{translate key="plugins.generic.bookPage.latexSource.title"}">{translate key="plugins.generic.bookPage.latexSource.link"}</a> <i class="fa fa-github"></i>
-			</div>
-			
+				{* langsci: view the code on github *}
+				<div class="item langsci_github">
+					{translate key="plugins.generic.bookPage.latexSource.text"}
+					 <a href={"https://github.com/langsci/"}{$publishedMonograph->getId()} target="blank" title="{translate key="plugins.generic.bookPage.latexSource.title"}">{translate key="plugins.generic.bookPage.latexSource.link"}</a> <i class="fa fa-github"></i>
+				</div>
+	
 			{/if} <!-- available files -->
-
+			
 			{* Series *}
 			{if $series}
 				<div class="item series">

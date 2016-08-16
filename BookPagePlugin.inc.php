@@ -11,6 +11,9 @@
 
 import('lib.pkp.classes.plugins.GenericPlugin');
 
+
+//include('LangsciCommonFunctions.inc.php');
+
 class BookPagePlugin extends GenericPlugin {
 	/**
 	 * Register the plugin.
@@ -45,25 +48,33 @@ class BookPagePlugin extends GenericPlugin {
 		switch ($template) {
 			
 			case 'frontend/pages/book.tpl':
-						
-				// testing
-			//	$file = fopen("testfile.txt", "a");
-			//	fwrite($file, $publishedMonographId);
-				
+			
 				// variables
 				$publishedMonograph = $templateMgr->get_template_vars('publishedMonograph'); // get variable publishedMonograph from template 
 				$contextId = $publishedMonograph->getContextId(); 
 				$publishedMonographId = $publishedMonograph->getId();
+				$request = $this->getRequest();
+				$context = $request->getContext();
 				
-			//	$request = $this->getRequest();
 			//	$baseUrl = $request->getBaseUrl();
 			//	$pluginPath = $this->getPluginPath();
 				
-				// statistics: is there a statistic image of this book? statImageExists as variable given to the template 
-				// TODO: add imagePath to plugin settings
-				$imagePath = 'C:/xampp/htdocs/langsci-dev/public/stats/';
-				$templateMgr->assign('statImageExists', file_exists(realpath($imagePath.$publishedMonographId.'.svg')));
+				// testing
+			//	$file = fopen("testfile.txt", "a");
+			//	fwrite($file, $imagePath);
 				
+				/*** statistics ***/
+
+				// get folder path
+				$baseDir = realpath(__DIR__ . '/../../..');
+				
+				// get imagePath from plugin settings
+				$imagePath = $this->getSetting($context->getId(),'langsci_bookPage_imagePath');
+				
+				// assing the imagePath to the template if there is a statistic image of this book
+				$templateMgr->assign('statImageExists', file_exists(realpath($baseDir.$imagePath.$publishedMonographId.'.svg')));
+				$templateMgr->assign('imagePath', $imagePath);
+			
 				// get review links from the catalog entry tab plugin 
 				if(null!==($catalogEntryTabDao->getLink($publishedMonographId,"reviewdescription"))){
 					$templateMgr->assign('reviewdescription', $catalogEntryTabDao->getLink($publishedMonographId,"reviewdescription"));
@@ -112,6 +123,67 @@ class BookPagePlugin extends GenericPlugin {
 	function getTemplatePath() {
 		return parent::getTemplatePath() . 'templates/';
 	}
+	
+	
+	/*
+	* settings
+	*/
+	
+	// PKPPlugin::getManagementVerbs()
+	function getManagementVerbs() {
+		$verbs = parent::getManagementVerbs();
+		if ($this->getEnabled()) {
+			$verbs[] = array('settings', __('plugins.generic.hallOfFame.settings'));
+		}
+		return $verbs;
+	}
+
+	/**
+	 * @see Plugin::getActions()
+	 */
+	function getActions($request, $verb) {
+		$router = $request->getRouter();
+		import('lib.pkp.classes.linkAction.request.AjaxModal');
+		return array_merge(
+			$this->getEnabled()?array(
+				new LinkAction(
+					'settings',
+					new AjaxModal(
+						$router->url($request, null, null, 'manage', null, array('verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic')),
+						$this->getDisplayName()
+					),
+					__('manager.plugins.settings'),
+					null
+				),
+			):array(),
+			parent::getActions($request, $verb)
+		);
+	}
+
+ 	/**
+	 * @see Plugin::manage()
+	 */
+	function manage($args, $request) {
+		switch ($request->getUserVar('verb')) {
+			case 'settings':
+				$context = $request->getContext();
+				$this->import('BookPageSettingsForm');
+				$form = new BookPageSettingsForm($this, $context->getId());
+				if ($request->getUserVar('save')) {
+					$form->readInputData();
+					if ($form->validate()) {
+						$form->execute();
+						return new JSONMessage(true);
+					}
+				} else {
+					$form->initData();
+				}
+				return new JSONMessage(true, $form->fetch($request));
+		}
+		return parent::manage($args, $request);
+	}
+	
+	
 }
 
 ?>

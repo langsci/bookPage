@@ -13,24 +13,9 @@
 <locale name="en_US" full_name="U.S. English">
 
 	<message key="plugins.generic.bookPage.displayName">Book Page Plugin</message>
-	<message key="plugins.generic.bookPage.description">Changes the look and feel of the book page in the catalog, adds statistics and allows to highlight download and open review links.</message>
+	<message key="plugins.generic.bookPage.description">Changes the look and feel of the book page in the catalog, adds statistics and displays chapter with associated files.</message>
 	
-	<message key="plugins.generic.bookPage.read">Read book</message>
 	<message key="plugins.generic.bookPage.statistics">Statistics</message>
-	<message key="plugins.generic.bookPage.downloads">Downloads</message>
-	<message key="plugins.generic.bookPage.openReview">Open review</message>
-	<message key="plugins.generic.bookPage.openReview.title">Review this book.</message>
-	<message key="plugins.generic.bookPage.openReview.part0">Open review part 1</message>
-	<message key="plugins.generic.bookPage.openReview.part1">Open review part 2</message>
-	<message key="plugins.generic.bookPage.openReview.part0.title">Review part 1 of this book.</message>
-	<message key="plugins.generic.bookPage.openReview.part1.title">Review part 2 of this book.</message>
-	
-	<message key="plugins.generic.bookPage.downloadPDF">Download pdf</message>
-	<message key="plugins.generic.bookPage.downloadPDF.title"></message>
-	<message key="plugins.generic.bookPage.hardcover">Buy hardcover</message>
-	<message key="plugins.generic.bookPage.hardcover.title"></message>
-	<message key="plugins.generic.bookPage.softcover">Buy softcover</message>
-	<message key="plugins.generic.bookPage.softcover.title"></message>
 	
 	<message key="plugins.generic.bookPage.reviews">Reviews</message>
 	<message key="plugins.generic.bookPage.reviews.title"></message>
@@ -39,30 +24,11 @@
 	<message key="plugins.generic.bookPage.latexSource.link">GitHub</message>
 	<message key="plugins.generic.bookPage.latexSource.title">Go to GitHub</message>
 	
-	<message key="plugins.generic.bookPage.reviews">Reviews</message>
-	<message key="plugins.generic.bookPage.reviews.title"></message>
-
-	<message key="plugins.generic.bookPage.more">Read more</message>
-	<message key="plugins.generic.bookPage.less">Show less</message>
+	<message key="plugins.generic.bookPage.citeAs.title">Cite as</message>
 	
 	<!-- settings -->
-	<message key="plugins.generic.bookPage.manager.settings">Settings</message>
-	<message key="plugins.generic.bookPage.manager.settings.pubFormats.description">Name the publication formats, that shall be displayed at the catalog page beneath the title of each book. Be aware that only publication formats that are named like here can be displayed (case sensitive!). </message>
-	
-	<message key="plugins.generic.bookPage.manager.settings.pubFormat">Publication format</message>
-	<message key="plugins.generic.bookPage.manager.settings.pubFormats">Publication formats</message>
-	
-	<message key="plugins.generic.bookPage.manager.settings.forthcoming">Forthcoming</message>
-	<message key="plugins.generic.bookPage.manager.settings.forthcoming.label">Enter the term that shall be displayed at books that do not jet have a public file. Example: Forthcoming</message>
-	
-	<message key="plugins.generic.bookPage.manager.settings.review">Open review</message>
-	<message key="plugins.generic.bookPage.manager.settings.review.label">Open review label</message>
-	
-	<message key="plugins.generic.bookPage.manager.settings.download">Complete book</message>
-	<message key="plugins.generic.bookPage.manager.settings.download.label">Name the publication format that includes the complete book.</message>
-	
-	
-	
-	
-	
+	<message key="plugins.generic.bookPage.settings.title">Settings</message>
+	<message key="plugins.generic.bookPage.form.imagePath">Path to the stats images</message>
+	<message key="plugins.generic.bookPage.form.imagePath.label">Please enter the complete path to the folder that contains the statistic images (e.g. C:/xampp/htdocs/yourInstallation/public/stats/)</message>
+
 </locale>
