@@ -33,6 +33,14 @@ class BookPagePlugin extends GenericPlugin {
 		$request = $this->getRequest();
 		$templateMgr =& $args[0];
 		$template =& $args[1];
+		
+		
+		
+		// Hardcover softcover links from catalog entry tag plugin
+		import('plugins.generic.catalogEntryTab.CatalogEntryTabDAO');
+		$catalogEntryTabDao = new CatalogEntryTabDAO();
+		DAORegistry::registerDAO('CatalogEntryTabDAO', $catalogEntryTabDao);
+		
 	
 		switch ($template) {
 			
@@ -55,7 +63,21 @@ class BookPagePlugin extends GenericPlugin {
 				// TODO: add imagePath to plugin settings
 				$imagePath = 'C:/xampp/htdocs/langsci-dev/public/stats/';
 				$templateMgr->assign('statImageExists', file_exists(realpath($imagePath.$publishedMonographId.'.svg')));
-
+				
+				// get review links from the catalog entry tab plugin 
+				if(null!==($catalogEntryTabDao->getLink($publishedMonographId,"reviewdescription"))){
+					$templateMgr->assign('reviewdescription', $catalogEntryTabDao->getLink($publishedMonographId,"reviewdescription"));
+				}
+				if(null!==($catalogEntryTabDao->getLink($publishedMonographId,"reviewlink"))){
+					$templateMgr->assign('reviewlink', $catalogEntryTabDao->getLink($publishedMonographId,"reviewlink"));
+				}
+				if(null!==($catalogEntryTabDao->getLink($publishedMonographId,"reviewauthor"))){
+					$templateMgr->assign('reviewauthor', $catalogEntryTabDao->getLink($publishedMonographId,"reviewauthor"));
+				}
+				if(null!==($catalogEntryTabDao->getLink($publishedMonographId,"reviewdate"))){
+					$templateMgr->assign('reviewdate', $catalogEntryTabDao->getLink($publishedMonographId,"reviewdate"));
+				}
+				
 				// replace the template book.tpl wich includes the template monograph_full.tpl
 				$templateMgr->display($this->getTemplatePath() . 'langsci_book.tpl', 'text/html', 'TemplateManager::display');
 				return true;

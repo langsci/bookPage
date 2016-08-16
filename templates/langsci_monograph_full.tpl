@@ -190,15 +190,39 @@
 				</div>
 			{/if}
 			
+			{* langsci reviews *}
+			
+			{if $reviewlink}
+				<div class="langsci_review">
+					<h3 class="label">{translate key="plugins.generic.bookPage.reviews"}</h3>
+					
+					{* TODO: get all reviews*}
+		
+						<ul>
+							<li>
+								<a href="{$reviewlink}">
+									{$reviewdescription}
+								</a>
+								{if $reviewauthor}
+									by {$reviewauthor}
+								{/if}
+								{if $reviewdate}
+									published {$reviewdate}
+								{/if}
+							</li>
+						</ul>
+					
+				</div>
+				<br>
+			{/if}
+			
 			
 			{* langsci statistics *}
-			{* todo: add check, if image exists *}
 			
-			{*{assign var=imagePath value="/plugins/generic/bookPage/img/"}*}
+			{* TODO: get imagepath from setting *}
 			{assign var=imagePath value="/public/stats/"}
 			
 			{if $statImageExists} 
-			
 				<div class="statistics">
 					<h3 class="label">{translate key="plugins.generic.bookPage.statistics"}</h3>
 					<div class="value">
@@ -207,7 +231,6 @@
 						</a>
 					</div>	
 				</div>
-			
 			{/if}
 			
 			{call_hook name="Templates::Catalog::Book::Main"}
