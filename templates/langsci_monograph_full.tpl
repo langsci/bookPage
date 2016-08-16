@@ -76,16 +76,24 @@
 
 <!-- langsci: css for font awesome - used for github icon -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{$baseUrl}/plugins/generic/bookPage/BookPagePlugin.css" type="text/css" />
  
 <div class="obj_monograph_full">
 	<h1 class="title">
 		{$monograph->getLocalizedFullTitle()|escape}
 	</h1>
+	<div class="langsci_author">
+		{assign var="authors" value=$monograph->getAuthors()}
+		{foreach from=$authors key=id item=author}
+			{if $author->getIncludeInBrowse()}
+				{$author->getFullName()|escape}&nbsp;&nbsp;
+			{/if}
+		{/foreach}
+	</div>
 
 	<div class="row">
 		<div class="main_entry">
 
-		
 			<div class="item abstract">
 				<h3 class="label">
 					{translate key="submission.synopsis"}
@@ -122,9 +130,10 @@
 			{* Chapters *}
 			{if $chapters|@count}
 				<div class="item chapters">
-					<h3 class="pkp_screen_reader">
+					<h3 class="label">
 						{translate key="submission.chapters"}
 					</h3>
+					
 					<ul>
 						{foreach from=$chapters item=chapter}
 						
