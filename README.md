@@ -4,8 +4,16 @@
 
 About
 -----
-This plugin replaces the template for the home page in OMP (frontend/pages/index.tpl). In index.tpl, it adds a slider that is populated with data from table 'langsci_slider_content'. The table can be created and managed with the Plugin "Slider Content Plugin". This is the Language Science Press Version whicht includes items and locales specific to Language Science Press.  
+This plugin changes changes the book page and the catalog view. The plugin contains langsci specific changes and content. 
 
+ * The series postion of the book at the catalog view is being hidden.
+ * The cover at the book page is replaced by a bigger one. 
+ * The book page is added with a statistic image uploaded to public/stats. 
+ * The vg wort pixel is included to the download buttons (pixel may be added with the vg wort plugin). 
+ * Display chapters with download option.
+ * Link to gitHub repo at book page.
+ * Display reviews from the catalogEntryTab (can be added at the links tab).
+  
 License
 -------
 Copyright (c) 2016 Language Science Press
@@ -14,7 +22,7 @@ This plugin is licensed under the GNU General Public License v2.
 
 System Requirements
 -------------------
-This plugin is compatible with...
+This plugin is compatible with:
  - OMP 1.2.0
 
 Installation

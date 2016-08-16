@@ -6,14 +6,23 @@ Key data
 - current version: 1.2
 - tested on OMP version: 1.2.0
 - github link: https://github.com/langsci/bookPage
-- community plugin: yes
-- date: 2016/07/25
+- community plugin: no
+- date: 2016/08/16
 
 Description
 ============
 
-This plugin replaces templates for the catalog and the book page in OMP (frontend/pages/catalog.tpl, frontend/pages/book.tpl and frontend/objects/monograph_full.tpl). The book page is added with a statistic image uploaded to public/downloads/stats. The cover is replaced by a bigger one. The vg wort pixel is included to the download buttons (pixel may be added with the vg wort plugin). 
-Open review .... Cite as .... Display Chapters with download option ....
+This plugin replaces templates for the catalog and the book page in OMP.
+
+ * hidden series postion of the book at the catalog view
+ * changed cover display method to show a bigger image
+ * display of statistic svg images (public/stats) at book page 
+ * vg wort pixel added to download links
+ * changes from Nate https://github.com/pkp/pkp-lib/issues/1428 to connect chapter and downloads at book page n.
+ * link to gitHub repo at book page 
+ * display reviews from the catalogEntryTab (links)
+ * Open review files (PDF-OR) are hidden
+ * TODO: Cite as 
  
 Implementation
 ================
@@ -31,11 +40,13 @@ New pages
 
 Templates
 ---------
-- templates that replace other templates: 3
+- templates that replace other templates: 5
 
 		langsci_catalog.tpl replaces frontend/pages/catalog.tpl
 		langsci_book.tpl replaces frontend/pages/book.tpl 
 		langsci_monograph_full.tpl replaces frontend/objects/monograph_full.tpl
+		langsci_monograph_summary.tpl replaces frontend/objects/monograph_summary.tpl
+		langsci_monographList.tpl replaces frontend/components/monographList.tpl
 
 - templates that are modified with template hooks: 0
 - new/additional templates: 0
