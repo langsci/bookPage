@@ -423,8 +423,9 @@
 			{* Publication formats *}
 			{if count($publicationFormats)}
 				{foreach from=$publicationFormats item="publicationFormat"}
-					{if $publicationFormat->getIsApproved()}
-
+					{* LangSci: do not display PDF-OR *}
+					{if $publicationFormat->getIsApproved() && $publicationFormat->getLocalizedName()!="PDF-OR"}
+					
 						{assign var=identificationCodes value=$publicationFormat->getIdentificationCodes()}
 						{assign var=identificationCodes value=$identificationCodes->toArray()}
 						{assign var=publicationDates value=$publicationFormat->getPublicationDates()}
