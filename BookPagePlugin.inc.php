@@ -37,14 +37,11 @@ class BookPagePlugin extends GenericPlugin {
 		$templateMgr =& $args[0];
 		$template =& $args[1];
 		
-		
-		
 		// Hardcover softcover links from catalog entry tag plugin
 		import('plugins.generic.catalogEntryTab.CatalogEntryTabDAO');
 		$catalogEntryTabDao = new CatalogEntryTabDAO();
 		DAORegistry::registerDAO('CatalogEntryTabDAO', $catalogEntryTabDao);
 		
-	
 		switch ($template) {
 			
 			case 'frontend/pages/book.tpl':
@@ -56,25 +53,29 @@ class BookPagePlugin extends GenericPlugin {
 				$request = $this->getRequest();
 				$context = $request->getContext();
 				
-			//	$baseUrl = $request->getBaseUrl();
-			//	$pluginPath = $this->getPluginPath();
-				
-				// testing
-			//	$file = fopen("testfile.txt", "a");
-			//	fwrite($file, $imagePath);
-				
 				/*** statistics ***/
-
-				// get folder path
-				$baseDir = realpath(__DIR__ . '/../../..');
 				
 				// get imagePath from plugin settings
 				$imagePath = $this->getSetting($context->getId(),'langsci_bookPage_imagePath');
 				
-				// assing the imagePath to the template if there is a statistic image of this book
-				$templateMgr->assign('statImageExists', file_exists(realpath($baseDir.$imagePath.$publishedMonographId.'.svg')));
+				// check if the image path is an url or a local folder path
+				if(filter_var($imagePath, FILTER_VALIDATE_URL)!==false){
+					
+					// remote check if image exists
+					if(@fopen($imagePath.$publishedMonographId.'.png', 'r')) $statImageExists = true;
+				
+				}else{
+					
+					// add basedir to image path
+					$baseDir = realpath(__DIR__ . '/../../..');
+					
+					// local check if image exists
+					if(file_exists(realpath($baseDir.$imagePath.$publishedMonographId.'.png'))) $statImageExists = true;
+				}
+				
+				// assing variables imagePath and statImageExists to the template
+				$templateMgr->assign('statImageExists', $statImageExists);
 				$templateMgr->assign('imagePath', $imagePath);
-			
 			
 				/*** reviews ***/
 			
@@ -219,7 +220,6 @@ class BookPagePlugin extends GenericPlugin {
 		}
 		return parent::manage($args, $request);
 	}
-	
 	
 }
 

@@ -28,7 +28,7 @@
 	
 	<!-- settings -->
 	<message key="plugins.generic.bookPage.settings.title">Settings</message>
-	<message key="plugins.generic.bookPage.form.imagePath">Path to the stats images</message>
-	<message key="plugins.generic.bookPage.form.imagePath.label">Please enter the path to the folder that contains the statistic images (e.g. /public/stats/)</message>
+	<message key="plugins.generic.bookPage.settings.imagePath">Path to the images</message>
+	<message key="plugins.generic.bookPage.settings.imagePath.label">Please enter the path to the folder that contains the statistic images (e.g. /public/stats/) or an external url (e.g. https://raw.githubusercontent.com/...). Currently only png images are displayed.</message>
 
 </locale>

@@ -17,14 +17,13 @@
 
 	{fbvFormArea id="bookPageSettingsForm" class="border" title="plugins.generic.bookPage.settings.title"}
 
-	
 		{** image path **}
 
 		{fbvFormSection}
-			<p class="pkp_help">{translate key="plugins.generic.bookPage.form.imagePath"}</p>
-			{fbvElement type="text" label="plugins.generic.bookPage.form.imagePath.label"
-						id="langsci_bookPage_imagePath" value=$langsci_bookPage_imagePath
-						maxlength="100" size=$fbvStyles.size.MAXIMUM}
+
+			<p class="pkp_help">{translate key="plugins.generic.bookPage.settings.imagePath"}</p>
+			{fbvElement type="text" label="plugins.generic.bookPage.settings.imagePath.label" id="langsci_bookPage_imagePath" value=$langsci_bookPage_imagePath maxlength="100" size=$fbvStyles.size.MAXIMUM}
+
 		{/fbvFormSection}
 
 		{fbvFormButtons submitText="common.save"}

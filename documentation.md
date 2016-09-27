@@ -16,13 +16,12 @@ This plugin replaces templates for the catalog and the book page in OMP.
 
  * hidden series postion of the book at the catalog view
  * changed cover display method to show a bigger image
- * display of statistic svg images (public/stats) at book page - path to image folder in the plugin setting (e.g. /public/stats/)
+ * display of statistic png images at book page - path to image folder in the plugin setting
  * vg wort pixel added to download links
  * changes from Nate https://github.com/pkp/pkp-lib/issues/1428 to connect chapter and downloads at book page n.
  * link to gitHub repo at book page 
  * display reviews from the catalogEntryTab (links)
  * Open review files (PDF-OR) are hidden
- * TODO: Cite as 
  
 Implementation
 ================
@@ -81,8 +80,8 @@ Classes, plugins, external software
  
 Metrics
 --------
-- number of files: [10] (without external software)
-- number of lines: [428] (without external software)
+- number of files: 14 (without external software)
+- number of lines: ca. 2000 (without external software)
 
 Settings
 --------

@@ -226,18 +226,19 @@
 				</div>
 
 			{/if}
-			
+
 			{* langsci statistics *}
-			{if $statImageExists} 
+			{if $statImageExists}
 				<div class="item langsci_statistics">
 					<h3 class="label">{translate key="plugins.generic.bookPage.statistics"}</h3>
 					<div class="value">
-						<a href="{$baseUrl}{$imagePath}{$publishedMonograph->getId()}{'.svg'}">
-							<img class="pkp_helpers_container_center" alt="{$publishedMonograph->getLocalizedFullTitle()|escape}" src="{$baseUrl}{$imagePath}{$publishedMonograph->getId()}{'.svg'}" width="100%" />
+						<a href="{$imagePath}{$publishedMonograph->getId()}{'.png'}">
+							<img class="pkp_helpers_container_center" alt="{$publishedMonograph->getLocalizedFullTitle()|escape}" src="{$imagePath}{$publishedMonograph->getId()}{'.png'}" width="100%" />
 						</a>
 					</div>	
 				</div>
 			{/if}
+		
 			
 			{call_hook name="Templates::Catalog::Book::Main"}
 
