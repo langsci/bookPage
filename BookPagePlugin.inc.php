@@ -15,6 +15,7 @@ import('lib.pkp.classes.plugins.GenericPlugin');
 //include('LangsciCommonFunctions.inc.php');
 
 class BookPagePlugin extends GenericPlugin {
+	
 	/**
 	 * Register the plugin.
 	 * @param $category string
@@ -25,12 +26,18 @@ class BookPagePlugin extends GenericPlugin {
 		if (parent::register($category, $path)) {
 			if ($this->getEnabled()) {
 				HookRegistry::register ('TemplateManager::display', array(&$this, 'handleDisplayTemplate'));
+				HookRegistry::register('TemplateManager::include', array(&$this, 'handleIncludeTemplate'));
 			}
 			return true;
 		}
 		return false;
 	}
-
+	
+	/**
+	 * Handle templates that are called with the display hook.
+	 * @param $hookName string
+	 * @param $args array
+	 */
 	function handleDisplayTemplate($hookName, $args) {
 
 		$request = $this->getRequest();
@@ -53,7 +60,7 @@ class BookPagePlugin extends GenericPlugin {
 				$request = $this->getRequest();
 				$context = $request->getContext();
 				
-				/*** statistics ***/
+				// statistics 
 				
 				// get imagePath from plugin settings
 				$imagePath = $this->getSetting($context->getId(),'langsci_bookPage_imagePath');
@@ -77,9 +84,10 @@ class BookPagePlugin extends GenericPlugin {
 				$templateMgr->assign('statImageExists', $statImageExists);
 				$templateMgr->assign('imagePath', $imagePath);
 			
-				/*** reviews ***/
+				// reviews
 			
 				// get review links from the catalog entry tab plugin 
+				// TODO: update correct DAO from catalog entry tab plugin
 				if(null!==($catalogEntryTabDao->getLink($publishedMonographId,"reviewdescription"))){
 					$templateMgr->assign('reviewdescription', $catalogEntryTabDao->getLink($publishedMonographId,"reviewdescription"));
 				}
@@ -93,8 +101,7 @@ class BookPagePlugin extends GenericPlugin {
 					$templateMgr->assign('reviewdate', $catalogEntryTabDao->getLink($publishedMonographId,"reviewdate"));
 				}
 				
-				
-				/*** vg wort ***/
+				// vg wort
 				
 				// generate imageUrl for VG Wort and save it as template variable
 				$templateMgr->assign('imageUrl', $this->createVgWortUrl($contextId, $publishedMonographId));
@@ -113,6 +120,31 @@ class BookPagePlugin extends GenericPlugin {
 		return false;
 	}
 	
+	/**
+	 * Handle templates that are called with an include hook.
+	 * @param $hookName string
+	 * @param $args array
+	 */
+	function handleIncludeTemplate($hookName, $args) {
+		
+		$templateMgr =& $args[0];
+		$params =& $args[1];
+		if (!isset($params['smarty_include_tpl_file'])) {
+			return false;
+		}
+		switch ($params['smarty_include_tpl_file']) {
+			case 'frontend/objects/monograph_summary.tpl':
+				$templateMgr->display($this->getTemplatePath() . 
+				'langsci_monograph_summary.tpl', 'text/html', 'TemplateManager::include');
+				return true;
+			case 'frontend/objects/monograph_full.tpl':
+				$templateMgr->display($this->getTemplatePath() . 
+				'langsci_monograph_full.tpl', 'text/html', 'TemplateManager::include');
+				return true; 
+		}
+		return false;
+	}
+
 	
 	/**
 	 * Create the url for the vg wort pixel image with the domain and the public code
@@ -138,7 +170,6 @@ class BookPagePlugin extends GenericPlugin {
 		}else return '';
 		
 	}
-	
 	
 
 	/**

@@ -14,11 +14,11 @@ Description
 
 This plugin replaces templates for the catalog and the book page in OMP.
 
- * hidden series postion of the book at the catalog view
+ * hidden series postion of the book at the catalog view and title added
  * changed cover display method to show a bigger image
  * display of statistic png images at book page - path to image folder in the plugin setting
  * vg wort pixel added to download links
- * changes from Nate https://github.com/pkp/pkp-lib/issues/1428 to connect chapter and downloads at book page n.
+ * changes from Nate https://github.com/pkp/pkp-lib/issues/1428 to connect chapter and downloads at book page.
  * link to gitHub repo at book page 
  * display reviews from the catalogEntryTab (links)
  * Open review files (PDF-OR) are hidden
@@ -39,13 +39,12 @@ New pages
 
 Templates
 ---------
-- templates that replace other templates: 5
+- templates that replace other templates: 4
 
 		langsci_catalog.tpl replaces frontend/pages/catalog.tpl
 		langsci_book.tpl replaces frontend/pages/book.tpl 
 		langsci_monograph_full.tpl replaces frontend/objects/monograph_full.tpl
 		langsci_monograph_summary.tpl replaces frontend/objects/monograph_summary.tpl
-		langsci_monographList.tpl replaces frontend/components/monographList.tpl
 
 - templates that are modified with template hooks: 0
 - new/additional templates: 0

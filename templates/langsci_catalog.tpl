@@ -12,25 +12,24 @@
 {include file="frontend/components/header.tpl" pageTitle="navigation.catalog"}
 
 <div class="page page_catalog">
-<!--	{include file="frontend/components/breadcrumbs.tpl" currentTitleKey="navigation.catalog"}-->
+	{include file="frontend/components/breadcrumbs.tpl" currentTitleKey="navigation.catalog"}
 	<div class="monograph_count">
 		{translate key="catalog.browseTitles" numTitles=$publishedMonographs|@count}
 	</div>
 
-	<h1>
-		{translate key="catalog.allBooks"}
-	</h1>
-	
 	{* No published titles *}
 	{if !$publishedMonographs|@count}
-		<h2>
+		<h1>
 			{translate key="catalog.allBooks"}
-		</h2>
+		</h1>
 		<p>{translate key="catalog.noTitles"}</p>
 
 	{* Monograph List *}
 	{else}
-		{include file="../plugins/generic/bookPage/templates/langsci_monographList.tpl" monographs=$publishedMonographs featured=$featuredMonographIds}
+		<h1>
+			{translate key="catalog.allBooks"}
+		</h1>
+		{include file="frontend/components/monographList.tpl" monographs=$publishedMonographs featured=$featuredMonographIds}
 	{/if}
 
 </div><!-- .page -->

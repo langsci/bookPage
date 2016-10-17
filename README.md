@@ -4,9 +4,9 @@
 
 About
 -----
-This plugin changes changes the book page and the catalog view. The plugin contains langsci specific changes and content. 
+This plugin changes the book page and the catalog view. The plugin contains langsci specific changes and content. 
 
- * The series postion of the book at the catalog view is being hidden.
+ * The series postion of the book at the catalog view is being hidden and a title is added to the page.
  * The cover at the book page is replaced by a bigger one. 
  * The book page is added with a statistic image. The path to a folder containing the image needs to be specified in the plugin setting. The path can be a local folder (e.g. /public/stats/) or an external url (e.g. https://raw.githubusercontent.com/...). Currently only png images are displayed.
  * The vg wort pixel is included to the download buttons (pixel may be added with the vg wort plugin). 
