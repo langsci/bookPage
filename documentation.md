@@ -18,7 +18,6 @@ This plugin replaces templates for the catalog and the book page in OMP.
  * changed cover display method to show a bigger image
  * display of statistic png images at book page - path to image folder in the plugin setting
  * vg wort pixel added to download links
- * changes from Nate https://github.com/pkp/pkp-lib/issues/1428 to connect chapter and downloads at book page.
  * link to gitHub repo at book page 
  * display reviews from the catalogEntryTab (links)
  * Open review files (PDF-OR) are hidden
@@ -28,26 +27,31 @@ Implementation
 
 Hooks
 -----
-- used hooks: 1
+- used hooks: 3
 
 		TemplateManager::display
+		TemplateManager::include
+		Templates::Catalog::Book::Main
 
 New pages
 ------
 - new pages: 0
 
-
 Templates
 ---------
-- templates that replace other templates: 4
-
+- templates that replace other templates: 5
 		langsci_catalog.tpl replaces frontend/pages/catalog.tpl
 		langsci_book.tpl replaces frontend/pages/book.tpl 
 		langsci_monograph_full.tpl replaces frontend/objects/monograph_full.tpl
 		langsci_monograph_summary.tpl replaces frontend/objects/monograph_summary.tpl
+		langsci_downloadLink.tpl replaces frontend/components/downloadLink.tpl
+		monographList.tpl replaces frontend/components/monographList.tpl
 
-- templates that are modified with template hooks: 0
-- new/additional templates: 0
+- templates that are modified with template hooks: 1
+		frontend/objects/monograph_full.tpl: Templates::Catalog::Book::Main
+		
+- new/additional templates: 1
+		additionalContent.tpl
 
 Database access, server access
 -----------------------------
@@ -55,7 +59,7 @@ Database access, server access
 - writing access to OMP tables: yes (setting)
 - new tables: 0
 - nonrecurring server access: no
-- recurring server access: no
+- recurring server access: optional
  
 Classes, plugins, external software
 -----------------------
@@ -72,10 +76,11 @@ Classes, plugins, external software
 		vg wort plugin
 
 - use of external software: no
-- file upload: yes
+- file upload: optional
 		
-		statistics images (svg) has to be uploaded to a folder
-		enter path in plugin settings like public/stats/
+		statistics images (png) can be uploaded to a folder
+		or external storage of images 
+		both ways enter path in plugin settings 
  
 Metrics
 --------

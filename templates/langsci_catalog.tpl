@@ -13,6 +13,7 @@
 
 <div class="page page_catalog">
 	{include file="frontend/components/breadcrumbs.tpl" currentTitleKey="navigation.catalog"}
+	
 	<div class="monograph_count">
 		{translate key="catalog.browseTitles" numTitles=$publishedMonographs|@count}
 	</div>
@@ -29,7 +30,8 @@
 		<h1>
 			{translate key="catalog.allBooks"}
 		</h1>
-		{include file="frontend/components/monographList.tpl" monographs=$publishedMonographs featured=$featuredMonographIds}
+		
+		{include file="../plugins/generic/bookPage/templates/monographList.tpl" monographs=$publishedMonographs featured=$featuredMonographIds}
 	{/if}
 
 </div><!-- .page -->

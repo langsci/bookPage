@@ -11,9 +11,6 @@
 
 import('lib.pkp.classes.plugins.GenericPlugin');
 
-
-//include('LangsciCommonFunctions.inc.php');
-
 class BookPagePlugin extends GenericPlugin {
 	
 	/**
@@ -27,6 +24,7 @@ class BookPagePlugin extends GenericPlugin {
 			if ($this->getEnabled()) {
 				HookRegistry::register ('TemplateManager::display', array(&$this, 'handleDisplayTemplate'));
 				HookRegistry::register('TemplateManager::include', array(&$this, 'handleIncludeTemplate'));
+				HookRegistry::register('Templates::Catalog::Book::Main', array($this, 'addLangsciContent'));
 			}
 			return true;
 		}
@@ -64,6 +62,7 @@ class BookPagePlugin extends GenericPlugin {
 				
 				// get imagePath from plugin settings
 				$imagePath = $this->getSetting($context->getId(),'langsci_bookPage_imagePath');
+				$statImageExists = false;
 				
 				// check if the image path is an url or a local folder path
 				if(filter_var($imagePath, FILTER_VALIDATE_URL)!==false){
@@ -132,7 +131,10 @@ class BookPagePlugin extends GenericPlugin {
 		if (!isset($params['smarty_include_tpl_file'])) {
 			return false;
 		}
+		
 		switch ($params['smarty_include_tpl_file']) {
+			// FIX ME: include does not work within monographList.tpl that is included in catalog.tpl. Variable $monograph does not seem to be passed on.
+			// replaces the monograph summary view at the series page
 			case 'frontend/objects/monograph_summary.tpl':
 				$templateMgr->display($this->getTemplatePath() . 
 				'langsci_monograph_summary.tpl', 'text/html', 'TemplateManager::include');
@@ -141,10 +143,30 @@ class BookPagePlugin extends GenericPlugin {
 				$templateMgr->display($this->getTemplatePath() . 
 				'langsci_monograph_full.tpl', 'text/html', 'TemplateManager::include');
 				return true; 
+			// FIX ME: same problem as above
+			case 'frontend/components/downloadLink.tpl':
+				$templateMgr->display($this->getTemplatePath() . 
+				'langsci_downloadLink.tpl', 'text/html', 'TemplateManager::include');
+				return true; 
 		}
 		return false;
 	}
 
+	/**
+	 * Add langsci specific content to the book page
+	 * @param $hookName string
+	 * @param $args array
+	 */
+	function addLangsciContent($hookName, $args){
+		
+		$output =& $args[2];
+		$request = $this->getRequest();
+		$templateMgr = TemplateManager::getManager($request);
+		$output .=  $templateMgr->fetch($this->getTemplatePath() . 'additionalContent.tpl');
+		   
+		return false;
+		
+	}
 	
 	/**
 	 * Create the url for the vg wort pixel image with the domain and the public code
@@ -171,7 +193,6 @@ class BookPagePlugin extends GenericPlugin {
 		
 	}
 	
-
 	/**
 	 * @copydoc PKPPlugin::getDisplayName()
 	 */
