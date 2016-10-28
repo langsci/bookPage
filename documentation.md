@@ -3,7 +3,7 @@ Key data
 
 - name of the plugin: Book Page Plugin
 - author: Svantje Lilienthal
-- current version: 1.2
+- current version: 1.2.1
 - tested on OMP version: 1.2.0
 - github link: https://github.com/langsci/bookPage
 - community plugin: no
@@ -84,8 +84,8 @@ Classes, plugins, external software
  
 Metrics
 --------
-- number of files: 14 (without external software)
-- number of lines: ca. 2000 (without external software)
+- number of files: 16 (without external software)
+- number of lines: ca. 1380 (without external software)
 
 Settings
 --------

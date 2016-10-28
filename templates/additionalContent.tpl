@@ -10,27 +10,31 @@
  *}
  
 {* langsci reviews *}
-{if $reviewlink}
+{if $reviewsBySubmission}
 	<div class="item langsci_review">
+	
 		<h3 class="label">{translate key="plugins.generic.bookPage.reviews"}</h3>
 		
-		{* TODO: get all reviews*}
-
-		<ul>
-			<li>
-				<a href="{$reviewlink}">
-					{$reviewdescription}
-				</a>
-				{if $reviewauthor}
-					by {$reviewauthor}
-				{/if}
-				{if $reviewdate}
-					published {$reviewdate}
-				{/if}
-			</li>
-		</ul>
+		{* get all reviews *}
+		{foreach from=$reviewsBySubmission item=review}
+			<ul>
+				<li>
+					<a href="{$review.link}">
+						{$review.name}
+					</a>
+					{if $review.reviewer}
+						by {$review.reviewer}
+					{/if}
+					{if $review.date}
+						published {$review.date}
+					{/if}
+					{if $review.money_quote}
+						<div class="moneyquote">{$review.money_quote}</div>
+					{/if}
+				</li>
+			</ul>
+		{/foreach}		
 	</div>
-
 {/if}
 
 {* langsci statistics *}

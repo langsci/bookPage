@@ -93,6 +93,7 @@
 			{/if}
 		{/foreach}
 	</div>
+	
 	{* end langsci *}
 
 	<div class="row">
@@ -277,7 +278,7 @@
 
 						{* File downloads *}
 						{else}
-						
+					
 
 							{* Only display files that haven't been displayed in a chapter *}
 							{pluck_files assign=pubFormatFiles files=$nonChapterFiles by="publicationFormat" value=$format->getId()}
