@@ -320,6 +320,20 @@
 						{/if}
 					{/foreach}{* Publication formats loop *}
 				</div>
+
+				{* langsci: PaperHive widget *}
+				<div class="item langsci_paperhive">
+					<iframe
+						src="https://paperhive.org/widget/#type=langsci&id={$publishedMonograph->getId()}"
+						width="100%"
+						height="40px"
+						scrolling="no"
+						frameborder="0"
+						allowtransparency="true"
+						style="border:none;overflow:hidden;width:100%;"
+					></iframe>
+				</div>
+				{* end langsci *}
 				
 				{* langsci: view the code on github *}
 				<div class="item langsci_github">

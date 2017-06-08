@@ -10,6 +10,7 @@ This plugin changes the book page and the catalog view. The plugin contains lang
  * The cover at the book page is replaced by a bigger one. 
  * The book page can be added with a statistic image. The path to a folder containing the image needs to be specified in the plugin setting. The path can be a local folder (e.g. /public/stats/) or an external url (e.g. https://raw.githubusercontent.com/...). Currently only png images are displayed.
  * The vg wort pixel is included to the download buttons (pixel may be added with the vg wort plugin). 
+ * PaperHive widget on book page
  * Link to gitHub repo at book page.
  * Display reviews from the catalogEntryTab (can be added at the links tab). 
   
