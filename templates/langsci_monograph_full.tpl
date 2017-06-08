@@ -324,7 +324,7 @@
 				{* langsci: PaperHive widget *}
 				<div class="item langsci_paperhive">
 					<iframe
-						src="https://paperhive.org/widget/#type=langsci&id={$publishedMonograph->getId()}"
+						src="https://paperhive.org/widget/#type=langsci&id={$publishedMonograph->getId()}&restrictToLatest=true"
 						width="100%"
 						height="40px"
 						scrolling="no"
