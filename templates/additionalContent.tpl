@@ -8,11 +8,9 @@
  * @brief additional content for the book page 
  *
  *}
- 
 {* langsci reviews *}
 {if $reviewsBySubmission}
 	<div class="item langsci_review">
-	
 		<h3 class="label">{translate key="plugins.generic.bookPage.reviews"}</h3>
 		
 		{* get all reviews *}
@@ -42,8 +40,8 @@
 	<div class="item langsci_statistics">
 		<h3 class="label">{translate key="plugins.generic.bookPage.statistics"}</h3>
 		<div class="value">
-			<a href="{$imagePath}{$publishedMonograph->getId()}{'.png'}">
-				<img class="pkp_helpers_container_center" alt="{$publishedMonograph->getLocalizedFullTitle()|escape}" src="{$imagePath}{$publishedMonograph->getId()}{'.png'}" width="100%" />
+			<a href="{$imagePath}{$publishedSubmission->getId()}{'.png'}">
+				<img class="pkp_helpers_container_center" alt="{$publishedSubmission->getLocalizedFullTitle()|escape}" src="{$imagePath}{$publishedSubmission->getId()}{'.png'}" width="100%" />
 			</a>
 		</div>	
 	</div>

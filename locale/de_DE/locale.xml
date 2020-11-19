@@ -11,7 +11,7 @@
   *
   -->
 
-<locale name="en_US" full_name="U.S. English">
+<locale name="de_DE" full_name="German">
 
 	<message key="plugins.generic.bookPage.displayName">Book Page Plugin</message>
 	<message key="plugins.generic.bookPage.description">Changes the look and feel of the book page in the catalog, adds statistics and displays chapter with associated files.</message>
@@ -33,4 +33,3 @@
 	<message key="plugins.generic.bookPage.settings.imagePath.label">Please enter the path to the folder that contains the statistic images (e.g. /public/stats/) or an external url (e.g. https://raw.githubusercontent.com/...). Currently only png images are displayed.</message>
 	
 </locale>
-
