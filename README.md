@@ -21,9 +21,20 @@ Installation
 To install the plugin:
  - Upload the tar.gz file in OMP (Management > Website Settings > Plugins > Generic Plugins)
 
-Support
+Features
 ---------------
-A documentation ...
+
+ - Github-Link auf Buchseiteeingefügt
+ - Autorenliste auf Buchseite verkürzt
+ - Link zu "latex code on git hub" auf Artikelseite eingefügt
+ - Reviews-Abschnitt auf Artikelseite eingefügt
+ - Statistikbild auf Buchseite größer
+ - Coverbild auf Buchseite größer
+ - Plugin Settings, wo man die URL zu den Statistikbildern angeben kann
+nicht mehr:
+ - VG Wort Pixel
+ - Behandlung von "PDF-OR" Publikationsformaten
+
 
 
 
