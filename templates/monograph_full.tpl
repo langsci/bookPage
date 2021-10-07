@@ -582,6 +582,32 @@
 				{/foreach}
 			{/if}
 
+			{* Citation Style Unified Style Sheet for Linguistics and BibTex *}
+			{if $publication->getData('copyrightYear') && $publication->getLocalizedData('copyrightHolder')}
+				<div class="sub item">
+					<div class="label">
+						{translate|escape key="plugins.generic.bookPage.citation.title"}
+					</div>
+		
+					<div  class="value">
+						{include file="../plugins/generic/bookPage/templates/UnifiedLinguisticsStyle.tpl"}
+					</div>
+
+					{include file="../plugins/generic/bookPage/templates/bibtex.tpl"}
+					{capture assign="bibtex"}{call get_bibtex}{/capture}
+
+					<div class="value">
+						<span><button class="obj_galley_link" onclick="copyToClipboard('{$bibtex|strip}')" Style="line-height: 16px;font-size: 10px;">Copy BibTeX</button></span>
+					</div>
+					
+					<script type="text/javascript">
+						function copyToClipboard(copyText) {
+							navigator.clipboard.writeText(copyText);
+						}
+					</script>
+				</div>
+			{/if}
+
 			{call_hook name="Templates::Catalog::Book::Details"}
 
 		</div><!-- .details -->
