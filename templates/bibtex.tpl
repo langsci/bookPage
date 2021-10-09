@@ -1,6 +1,4 @@
 {function name=get_bibtex}
-    
-
     {if $editors}
         {foreach from=$editors key=id item=editor}
             {if $editor@first}

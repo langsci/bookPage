@@ -597,7 +597,7 @@
 					{capture assign="bibtex"}{call get_bibtex}{/capture}
 
 					<div class="value">
-						<span><button class="obj_galley_link" onclick="copyToClipboard('{$bibtex|strip}')" Style="line-height: 16px;font-size: 10px;">Copy BibTeX</button></span>
+						<span><button class="obj_galley_link" onclick="copyToClipboard('{$bibtex|strip|regex_replace:"/\b(\b(?![a-z]+\b|[A-Z]+\b)[a-zA-Z]+)\b/m":" { $1 } "}')" Style="line-height: 16px;font-size: 10px;">Copy BibTeX</button></span>
 					</div>
 					
 					<script type="text/javascript">
