@@ -209,6 +209,18 @@
 										{/foreach}
 									</div>
 								{/if}
+								{if $remoteChapters|@count}
+									<div class="files">
+										{foreach from=$remoteChapters item=remoteChapter}
+											{if $remoteChapter->getData('id') == $chapterId}
+												{* Display the download link *}
+												<a href="{$remoteChapter->getData('urlRemote')|escape}" class="cmp_download_link application/pdf">
+													{$remoteChapter->getData('urlRemote')|escape|regex_replace:"#.*\.#":""|upper}
+												</a>
+											{/if}
+										{/foreach}
+									</div>
+								{/if}
 							</li>
 						{/foreach}
 					</ul>

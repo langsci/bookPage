@@ -34,7 +34,7 @@ Features
 nicht mehr:
  - VG Wort Pixel
  - Behandlung von "PDF-OR" Publikationsformaten
- - "Cita as" section for Unified Style Sheet for Linguistics
+ - "Cite as" section for Unified Style Sheet for Linguistics
  - "Copy BibTex" button
 
 
