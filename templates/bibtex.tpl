@@ -7,8 +7,8 @@
                     {"editor = "}{ldelim}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}{" "}
                 {elseif $editor@last && $editor@total != 1}
                     {"and "}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}
-                    {if $editor@total != 1}{" (ed.)"}
-                    {else}{" (eds.)"}{/if}
+                    {if $editor@total != 1}{" (eds.)"}
+                    {else}{" (ed.)"}{/if}
                 {else}
                     {"and "}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}{" "}
                 {/if}
