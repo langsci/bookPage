@@ -28,7 +28,11 @@
             {rdelim}{",<br>"}
         {/if}
 
-        {"title = "}{ldelim}{$publication->getLocalizedData('title')|regex_replace:"/\W(\b(?![a-z]+\b|[A-Z]+\b)[a-zA-Z]+)\b/m":' {$1}'}{rdelim}{","}{"<br>"}
+        {"title = "}{ldelim}
+            {capture assign="title"}
+                {$publication->getLocalizedData('prefix')}{" "}{$publication->getLocalizedData('title')}
+            {/capture}
+            {$title|regex_replace:"/\W(\b(?![a-z]+\b|[A-Z]+\b)[a-zA-Z]+)\b/m":' {$1}'}{rdelim}{","}{"<br>"}
         {"year = "}{ldelim}{if $publication->getData('datePublished')}
                     {$publication->getData('datePublished')|date_format:"%Y"}
                 {else}

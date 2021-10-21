@@ -29,7 +29,7 @@
             {else}
                 {"forthcoming"}
             {/if}
-        {". "}{$publication->getLocalizedData('title')}
+        {". "}{$publication->getLocalizedData('prefix')}{" "}{$publication->getLocalizedData('title')}
         {if $publication->getLocalizedData('subtitle')}
             {": "}{$publication->getLocalizedData('subtitle')}
         {/if}
