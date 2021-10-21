@@ -2,11 +2,11 @@
     {if $editors}
         {foreach from=$editors key=id item=editor}
             {if $editor@first}
-                {$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}{" (ed.)"}
+                {$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}{" "}
             {elseif $editor@last && $editor@total != 1}
                 {"& "}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}{" (ed.)"}
             {else}
-                {", "}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}{" (ed.)"}
+                {", "}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}{" "}
             {/if}
         {/foreach}
     {else}
@@ -22,17 +22,21 @@
             {/foreach}
         {/if}
     {/if}
-        {" . "}{$publication->getData('datePublished')|date_format:"%Y"} 
-        {" . "}{$publication->getLocalizedData('title')}
+        {". "}{if $publication->getData('datePublished')}
+                {$publication->getData('datePublished')|date_format:"%Y"}
+            {else}
+                {"forthcoming"}
+            {/if}
+        {". "}{$publication->getLocalizedData('title')}
         {if $publication->getLocalizedData('subtitle')}
-            {" : "}{$publication->getLocalizedData('subtitle')}
+            {": "}{$publication->getLocalizedData('subtitle')}
         {/if}
     {if $series}
-        {" . ("}{$series->getLocalizedData('title')}
+        {". ("}{$series->getLocalizedData('title')}
             {if $publication->getLocalizedData('seriesPosition')}
                 {" "}{$publication->getLocalizedData('seriesPosition')}
             {/if}
         {")"}
     {/if}
-    {" . "}{$currentPress->getData('location')}{" : "}{$currentPress->getLocalizedData('name')}{"."}
+    {". "}{$currentPress->getData('location')}{": "}{$currentPress->getLocalizedData('name')}{"."}
 {/strip}
