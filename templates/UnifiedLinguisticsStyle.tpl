@@ -15,7 +15,7 @@
                 {if $author@first}
                     {$author->getLocalizedFamilyName()|escape}{", "}{$author->getLocalizedGivenName()|escape}
                 {elseif $author@last && $author@total != 1}
-                    {"& "}{$author->getLocalizedFamilyName()|escape}{", "}{$author->getLocalizedGivenName()|escape}
+                    {" & "}{$author->getLocalizedFamilyName()|escape}{", "}{$author->getLocalizedGivenName()|escape}
                 {else}
                     {", "}{$author->getLocalizedFamilyName()|escape}{", "}{$author->getLocalizedGivenName()|escape}
                 {/if}

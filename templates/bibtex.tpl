@@ -6,16 +6,18 @@
                     {"@book{ldelim}"}{$editor->getLocalizedFamilyName()|strip|replace:' ':''}{$publication->getData('datePublished')|date_format:"%Y"}{","}{"<br>"}
                     {"editor = "}{ldelim}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}{" "}
                 {elseif $editor@last && $editor@total != 1}
-                    {"and "}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}{" (ed.)"}
+                    {"and "}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}
+                    {if $editor@total != 1}{" (ed.)"}
+                    {else}{" (eds.)"}{/if}
                 {else}
                     {"and "}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}{" "}
                 {/if}
             {/foreach}
-            {rdelim}{"<br>"}
+            {rdelim}{",<br>"}
         {else}
             {foreach from=$authors key=id item=author}
                 {if $author@first}
-                    {"@book{ldelim}"}{$author->getLocalizedFamilyName()|strip|replace:' ':''}{$publication->getData('datePublished')|date_format:"%Y"}{","}
+                    {"@book{ldelim}"}{$author->getLocalizedFamilyName()|strip|replace:' ':''}{$publication->getData('datePublished')|date_format:"%Y"}{","}{"<br>"}
                     {"author = "}{ldelim}{$author->getLocalizedFamilyName()|escape}{", "}{$author->getLocalizedGivenName()|escape}
                 {elseif $author@last && $author@total != 1}
                     {"and "}{$author->getLocalizedFamilyName()|escape}{", "}{$author->getLocalizedGivenName()|escape}
@@ -23,7 +25,7 @@
                     {"and "}{$author->getLocalizedFamilyName()|escape}{", "}{$author->getLocalizedGivenName()|escape}
                 {/if}
             {/foreach}
-            {rdelim}{"<br>"}
+            {rdelim}{",<br>"}
         {/if}
 
         {"title = "}{ldelim}{$publication->getLocalizedData('title')|regex_replace:"/\W(\b(?![a-z]+\b|[A-Z]+\b)[a-zA-Z]+)\b/m":' {$1}'}{rdelim}{","}{"<br>"}
