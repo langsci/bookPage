@@ -51,6 +51,7 @@
                     {assign var=storedPubId value=$publicationFormat->getStoredPubId($pubIdType)}
                     {if $pubIdType == 'doi'}
                         {" DOI: "}{$storedPubId|escape}
+                        {break}{break}
                     {/if}
                 {/foreach}
             {/if}
