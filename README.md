@@ -1,6 +1,6 @@
 - Book Page Plugin
-- Version: 2.0
-- Author: Carola Fanselow
+- Version: 2.1
+- Author: Carola Fanselow, Ronald Steffen
 
 About
 -----
@@ -34,6 +34,8 @@ Features
 nicht mehr:
  - VG Wort Pixel
  - Behandlung von "PDF-OR" Publikationsformaten
+ - "Cite as" section for Unified Style Sheet for Linguistics
+ - "Copy BibTex" button
 
 
 

@@ -25,11 +25,11 @@
 	<message key="plugins.generic.bookPage.latexSource.link">GitHub</message>
 	<message key="plugins.generic.bookPage.latexSource.title">Go to GitHub</message>
 	
-	<message key="plugins.generic.bookPage.citeAs.title">Cite as</message>
-	
 	<!-- settings -->
 	<message key="plugins.generic.bookPage.settings.title">Settings</message>
 	<message key="plugins.generic.bookPage.settings.imagePath">Path to the images</message>
 	<message key="plugins.generic.bookPage.settings.imagePath.label">Please enter the path to the folder that contains the statistic images (e.g. /public/stats/) or an external url (e.g. https://raw.githubusercontent.com/...). Currently only png images are displayed.</message>
 	
+	<!-- citation style Unified Style Sheet for Linguistics -->
+	<message key="plugins.generic.bookPage.citation.title">Zitieren als</message>
 </locale>

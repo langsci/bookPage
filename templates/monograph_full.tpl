@@ -209,6 +209,19 @@
 										{/foreach}
 									</div>
 								{/if}
+								{* This is used together with the Remote Chapter Galleys Plugin *}
+								{if $remoteChapters|@count}
+									<div class="files">
+										{foreach from=$remoteChapters item=remoteChapter}
+											{if $remoteChapter->getData('id') == $chapterId}
+												{* Display the download link *}
+												<a href="{$remoteChapter->getData('urlRemote')|escape}" class="cmp_download_link application/pdf">
+													{$remoteChapter->getData('urlRemote')|escape|regex_replace:"#.*\.#":""|upper}
+												</a>
+											{/if}
+										{/foreach}
+									</div>
+								{/if}
 							</li>
 						{/foreach}
 					</ul>
@@ -420,6 +433,57 @@
 							<div class="value">{$series->getPrintISSN()|escape}</div>
 						</div>
 					{/if}
+				</div>
+			{/if}
+
+			{* Citation Style Unified Style Sheet for Linguistics and BibTex *}
+			{if $publication->getData('copyrightYear') && $publication->getLocalizedData('copyrightHolder')}
+				<div class="sub item">
+					<div class="label">
+						{translate|escape key="plugins.generic.bookPage.citation.title"}
+					</div>
+		
+					<div  class="value">
+						{include file="../plugins/generic/bookPage/templates/UnifiedLinguisticsStyle.tpl"}
+					</div>
+
+					{include file="../plugins/generic/bookPage/templates/bibtex.tpl"}
+					{capture assign="bibtex"}{call get_bibtex}{/capture}
+					<div class="value">
+						<span><button class="obj_galley_link" onclick="copyToClipboard('{$bibtex|strip}')" Style="line-height: 16px;font-size: 10px;">Copy BibTeX</button></span>
+					</div>
+					<style>
+						#mtoast {
+						/* (A1) POSITION */
+						position: fixed;
+						top: 15px; right: 15px;
+						display: none;
+						/* (A2) DIMENSION */
+						width: 200px;
+						padding: 10px;
+						/* (A3) COLORS */
+    					background: #1e6292;
+						border: 1px solid #fff;
+						/* font */
+						color: #fff;
+						}
+					</style>
+					<div id="mtoast" onclick="this.style.display='none'"></div>
+					
+					<script type="text/javascript">
+						function copyToClipboard(copyText) {ldelim}
+							var toast = document.getElementById("mtoast");
+							console.log(copyText);
+							toast.innerHTML = "BibTex copied to clipoard!";
+							navigator.clipboard.writeText(copyText.replace(/(<br>)/g, '\n').replace(/\t/g, '')).then(
+								() => {ldelim} toast.style.display = "block"; {rdelim}).then(
+								() => setTimeout(
+									() => {ldelim} toast.style.display = "none"; {rdelim},
+									2000
+								)
+							); 
+						{rdelim}
+					</script>
 				</div>
 			{/if}
 
