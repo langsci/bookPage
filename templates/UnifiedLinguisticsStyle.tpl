@@ -4,7 +4,7 @@
             {if $editor@first}
                 {$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}
             {elseif $editor@last && $editor@total != 1}
-                {"& "}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}
+                {" & "}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}
                 {if $editor@total != 1}{" (eds.)"}
                 {else}{" (ed.)"}{/if}
             {else}
@@ -41,4 +41,5 @@
         {")"}
     {/if}
     {". "}{$currentPress->getData('location')}{": "}{$currentPress->getLocalizedData('name')}{"."}
+    {" DOI: "}{$publication->getData('pub-id::doi')}
 {/strip}

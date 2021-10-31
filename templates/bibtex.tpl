@@ -43,6 +43,7 @@
             {/if}
         {/if}
         {"address = "}{ldelim}{$currentPress->getData('location')}{rdelim}{","}{"<br>"}
-        {"publisher = "}{ldelim}{$currentPress->getLocalizedData('name')}{rdelim}{"<br>"}{rdelim}
+        {"publisher = "}{ldelim}{$currentPress->getLocalizedData('name')}{rdelim}{","}{"<br>"}
+        {"doi = "}{ldelim}{$publication->getData('pub-id::doi')}{rdelim}{"<br>"}{rdelim}
     {/function}
 {/strip}
