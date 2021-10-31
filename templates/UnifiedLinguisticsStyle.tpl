@@ -49,9 +49,9 @@
                 {foreach from=$pubIdPlugins item=pubIdPlugin}
                     {assign var=pubIdType value=$pubIdPlugin->getPubIdType()}
                     {assign var=storedPubId value=$publicationFormat->getStoredPubId($pubIdType)}
-                    {if $pubIdType == 'doi'}
+                    {if $pubIdType == 'doi' && $storedPubId}
                         {" DOI: "}{$storedPubId|escape}
-                        {break}{break}
+                        {break}
                     {/if}
                 {/foreach}
             {/if}
