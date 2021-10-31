@@ -43,5 +43,17 @@
     {". "}{$currentPress->getData('location')}{": "}{$currentPress->getLocalizedData('name')}{"."}
     {if $publication->getData('pub-id::doi')}
         {" DOI: "}{$publication->getData('pub-id::doi')}
+    {elseif count($publicationFormats)}
+        {foreach from=$publicationFormats item="publicationFormat"}
+            {if $publicationFormat->getIsApproved()}
+                {foreach from=$pubIdPlugins item=pubIdPlugin}
+                    {assign var=pubIdType value=$pubIdPlugin->getPubIdType()}
+                    {assign var=storedPubId value=$publicationFormat->getStoredPubId($pubIdType)}
+                    {if $pubIdType == 'doi'}
+                        {" DOI: "}{$storedPubId|escape}
+                    {/if}
+                {/foreach}
+            {/if}
+        {/foreach}
     {/if}
 {/strip}
