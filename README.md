@@ -1,6 +1,6 @@
 - Book Page Plugin
-- Version: 2.0
-- Author: Carola Fanselow
+- Version: 2.1
+- Author: Carola Fanselow, Ronald Steffen
 
 About
 -----
