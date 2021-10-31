@@ -41,5 +41,7 @@
         {")"}
     {/if}
     {". "}{$currentPress->getData('location')}{": "}{$currentPress->getLocalizedData('name')}{"."}
-    {" DOI: "}{$publication->getData('pub-id::doi')}
+    {if $publication->getData('pub-id::doi')}
+        {" DOI: "}{$publication->getData('pub-id::doi')}
+    {/if}
 {/strip}
