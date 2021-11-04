@@ -216,7 +216,7 @@
 											{if $remoteChapter->getData('id') == $chapterId}
 												{* Display the download link *}
 												<a href="{$remoteChapter->getData('urlRemote')|escape}" class="cmp_download_link application/pdf">
-													{$remoteChapter->getData('urlRemote')|escape|regex_replace:"#.*\.#":""|upper}
+													{$remoteChapter->getData('urlRemote')|escape|regex_replace:"#.*\.#":""|regex_replace:"#\?.*#":""|upper}
 												</a>
 											{/if}
 										{/foreach}
