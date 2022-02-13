@@ -28,13 +28,24 @@
 
         {"title = "}{ldelim}
             {capture assign="title"}
-                {$publication->getLocalizedData('prefix')}{" "}{$publication->getLocalizedData('title')}
+                {if $publication->getLocalizedData('prefix')}
+                    {if $pubState}
+                        {$pubState|escape}{$publication->getData('prefix')|regex_replace:"/Forthcoming: |Superseded: /":""|escape}{" "}
+                    {else}
+                        {$publication->getLocalizedData('prefix')}{" "}
+                    {/if}
+                {/if}
+                {$publication->getLocalizedData('title')}
             {/capture}
             {$title|regex_replace:"/\W(\b(?![a-z]+\b|[A-Z]+\b)[a-zA-Z]+)\b/m":' {$1}'}{rdelim}{","}{"<br>"}
         {"year = "}{ldelim}{if $publication->getData('datePublished')}
                     {$publication->getData('datePublished')|date_format:"%Y"}
                 {else}
-                    {"forthcoming"}
+                    {if $pubStae}
+                        {$pubState}
+                    {else}
+                        {"forthcoming"}
+                    {/if}
                 {/if}{rdelim}{","}{"<br>"}
         {if $series}
             {"series = "}{ldelim}{$series->getLocalizedData('title')}{rdelim}{","}{"<br>"}

@@ -85,7 +85,11 @@
 	{/if}
 
 	<h1 class="title">
-		{$publication->getLocalizedFullTitle()|escape}
+		{if $pubState}
+			{$pubState|escape}{$publication->getLocalizedFullTitle()|regex_replace:"/Forthcoming: |Superseded: /":""|escape}
+		{else}
+			{$publication->getLocalizedFullTitle()|escape}
+		{/if}
 	</h1>
 
 	{* langsci *}
