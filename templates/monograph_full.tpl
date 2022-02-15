@@ -86,7 +86,7 @@
 
 	<h1 class="title">
 		{if $pubState}
-			{$pubState|escape}{$publication->getLocalizedFullTitle()|regex_replace:"/Forthcoming: |Superseded: /":""|escape}
+			<span class="pubState">{$pubState|escape}</span>{$publication->getLocalizedFullTitle()|regex_replace:"/Forthcoming: |Superseded: /":""|escape}
 		{else}
 			{$publication->getLocalizedFullTitle()|escape}
 		{/if}

@@ -30,7 +30,7 @@
             {capture assign="title"}
                 {if $publication->getLocalizedData('prefix')}
                     {if $pubState}
-                        {$pubState|escape}{$publication->getData('prefix')|regex_replace:"/Forthcoming: |Superseded: /":""|escape}{" "}
+                        {$pubState|escape}{$publication->getLocalizedData('prefix')|regex_replace:"/Forthcoming: |Superseded: /":""|escape}{" "}
                     {else}
                         {$publication->getLocalizedData('prefix')}{" "}
                     {/if}
