@@ -69,17 +69,21 @@ class BookPagePlugin extends GenericPlugin {
 					// local check if image exists
 					if(file_exists(realpath($baseDir.$imagePath.$publishedSubmissionId.'.png'))) $statImageExists = true;
 				}
+				
 				// assing variables imagePath and statImageExists to the template
 				$templateMgr->assign('statImageExists', $statImageExists);
 				$templateMgr->assign('imagePath', $imagePath);
-				# if pubState plugin is installed show label
+
+				# if pubState plugin is installed show label and load css
 				if ($publication->getData('pubState')) {
 					$pubStatePlugin = PluginRegistry::getPlugin('generic', 'pubstateplugin');
 					$pubStateLabel = $pubStatePlugin->getPubStateLabel($publishedSubmission);
+					$pubStatePlugin->loadStyleSheet($request, $templateMgr);
 				} else {
 					$pubStateLabel = "";
 				}
-				$templateMgr->assign('pubState', $pubStateLabel);
+				$templateMgr->assign('pubStateLabel', $pubStateLabel);
+				$templateMgr->assign('pubState', $publication->getData('pubState'));
 				$templateMgr->display($this->getTemplateResource('book.tpl'));
 				return true;
 		}

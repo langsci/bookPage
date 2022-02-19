@@ -86,7 +86,13 @@
 
 	<h1 class="title">
 		{if $pubState}
-			<span class="pubState">{$pubState|escape}</span>{$publication->getLocalizedFullTitle()|regex_replace:"/Forthcoming: |Superseded: /":""|escape}
+			{if $pubState == $smarty.const.PUB_STATE_FORTHCOMING}
+				<span class="pubState_forthcoming">{$pubStateLabel|escape}</span>{$publication->getLocalizedFullTitle()|regex_replace:"/Forthcoming: |Superseded: /":""|escape}
+			{elseif $pubState == $smarty.const.PUB_STATE_SUPERSEDED}
+				<span class="pubState_superseded">{$pubStateLabel|escape}</span>{$publication->getLocalizedFullTitle()|regex_replace:"/Forthcoming: |Superseded: /":""|escape}
+			{else}
+				{$publication->getLocalizedFullTitle()|regex_replace:"/Forthcoming: |Superseded: /":""|escape}
+			{/if}
 		{else}
 			{$publication->getLocalizedFullTitle()|escape}
 		{/if}
