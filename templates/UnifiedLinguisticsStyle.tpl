@@ -27,15 +27,15 @@
         {". "}{if $publication->getData('datePublished')}
                 {$publication->getData('datePublished')|date_format:"%Y"}
             {else}
-                {if $pubStae}
-                    {$pubState}
+                {if $pubState}
+                    {$pubStateLabel}
                 {else}
                     {"forthcoming"}
                 {/if}
             {/if}
         {". "}
             {if $pubState}
-                {$pubState}{$publication->getLocalizedData('prefix')|regex_replace:"/Forthcoming: |Superseded: /":""}{" "}{$publication->getLocalizedData('title')}
+                {$pubStateLabel}{$publication->getLocalizedData('prefix')|regex_replace:"/Forthcoming: |Superseded: /":""}{" "}{$publication->getLocalizedData('title')}
             {else}
                 {$publication->getLocalizedData('prefix')}{" "}{$publication->getLocalizedData('title')}
             {/if}

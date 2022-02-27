@@ -30,7 +30,7 @@
             {capture assign="title"}
                 {if $publication->getLocalizedData('prefix')}
                     {if $pubState}
-                        {$pubState|escape}{$publication->getLocalizedData('prefix')|regex_replace:"/Forthcoming: |Superseded: /":""|escape}{" "}
+                        {$pubStateLabel|escape}{$publication->getLocalizedData('prefix')|regex_replace:"/Forthcoming: |Superseded: /":""|escape}{" "}
                     {else}
                         {$publication->getLocalizedData('prefix')}{" "}
                     {/if}
@@ -41,8 +41,8 @@
         {"year = "}{ldelim}{if $publication->getData('datePublished')}
                     {$publication->getData('datePublished')|date_format:"%Y"}
                 {else}
-                    {if $pubStae}
-                        {$pubState}
+                    {if $pubState}
+                        {$pubStateLabel}
                     {else}
                         {"forthcoming"}
                     {/if}
