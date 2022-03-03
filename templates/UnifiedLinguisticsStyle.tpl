@@ -24,18 +24,20 @@
             {/foreach}
         {/if}
     {/if}
-        {". "}{if $publication->getData('datePublished')}
-                {$publication->getData('datePublished')|date_format:"%Y"}
-            {else}
-                {if $pubState}
-                    {$pubStateLabel}
+        {". "}
+            {if $pubState}
+                {if $pubState == $smarty.const.PUB_STATE_FORTHCOMING}
+                    {$pubStateLabel|regex_replace:"/: /":""}
                 {else}
-                    {"forthcoming"}
+                    {if $publication->getData('datePublished')}
+                        {$publication->getData('datePublished')|date_format:"%Y"}
+                    {else}
+                    {/if}
                 {/if}
             {/if}
         {". "}
             {if $pubState}
-                {$pubStateLabel}{$publication->getLocalizedData('prefix')|regex_replace:"/Forthcoming: |Superseded: /":""}{" "}{$publication->getLocalizedData('title')}
+                {$publication->getLocalizedData('prefix')|regex_replace:"/Forthcoming: |Superseded: /":""}{" "}{$publication->getLocalizedData('title')}
             {else}
                 {$publication->getLocalizedData('prefix')}{" "}{$publication->getLocalizedData('title')}
             {/if}

@@ -38,15 +38,17 @@
                 {$publication->getLocalizedData('title')}
             {/capture}
             {$title|regex_replace:"/\W(\b(?![a-z]+\b|[A-Z]+\b)[a-zA-Z]+)\b/m":' {$1}'}{rdelim}{","}{"<br>"}
-        {"year = "}{ldelim}{if $publication->getData('datePublished')}
-                    {$publication->getData('datePublished')|date_format:"%Y"}
+        {"year = "}{ldelim}
+            {if $pubState}
+                {if $pubState == $smarty.const.PUB_STATE_FORTHCOMING}
+                    {$pubStateLabel|regex_replace:"/: /":""}
                 {else}
-                    {if $pubState}
-                        {$pubStateLabel}
+                    {if $publication->getData('datePublished')}
+                        {$publication->getData('datePublished')|date_format:"%Y"}
                     {else}
-                        {"forthcoming"}
                     {/if}
-                {/if}{rdelim}{","}{"<br>"}
+                {/if}
+            {/if}{rdelim}{","}{"<br>"}
         {if $series}
             {"series = "}{ldelim}{$series->getLocalizedData('title')}{rdelim}{","}{"<br>"}
             {if $publication->getLocalizedData('seriesPosition')}
