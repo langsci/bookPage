@@ -25,9 +25,7 @@ class BookPagePlugin extends GenericPlugin {
 			if ($this->getEnabled($mainContextId)) {
 				HookRegistry::register('TemplateManager::display',array($this, 'handleDisplay'));
 				HookRegistry::register('Templates::Catalog::Book::Main', array($this, 'addLangsciContent'));
-				//HookRegistry::register('TemplateManager::fetch', array(&$this, 'handleFetch'));
-				//HookRegistry::register('Templates::Catalog::Book::Details', array(&$this, 'handleCatalogBookDetails'));				
-				//HookRegistry::call($params['name'], array(&$params, $smarty, &$output));
+				HookRegistry::register('TemplateResource::getFilename', array($this, '_overridePluginTemplates'));
 			}
 			return true;
 		}
@@ -39,11 +37,9 @@ class BookPagePlugin extends GenericPlugin {
 		$request = $this->getRequest();
 		$templateMgr =& $args[0];
 		$template =& $args[1];
-		//$currentPress = $templateManager->getTemplateVars('currentPress');	
 		switch ($template) {
 			case 'frontend/pages/book.tpl':
 			
-				$request = $this->getRequest();
 				$context = $request->getContext();			
 				$publishedSubmission = $templateMgr->get_template_vars('publishedSubmission');
 				$publishedSubmissionId = $publishedSubmission->getId();
@@ -86,6 +82,7 @@ class BookPagePlugin extends GenericPlugin {
 				$templateMgr->assign('pubState', $publication->getData('pubState'));
 				$templateMgr->display($this->getTemplateResource('book.tpl'));
 				return true;
+				break;
 		}
 		return false;
 	}
