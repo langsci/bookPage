@@ -1,5 +1,5 @@
 - Book Page Plugin
-- Version: 2.1
+- Version: 2.2
 - Author: Carola Fanselow, Ronald Steffen
 
 About
@@ -36,6 +36,7 @@ nicht mehr:
  - Behandlung von "PDF-OR" Publikationsformaten
  - "Cite as" section for Unified Style Sheet for Linguistics
  - "Copy BibTex" button
+ - Template hook for Paperhive Widget eingefügt
 
 
 

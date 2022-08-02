@@ -414,6 +414,9 @@
 						</div>
 					{/if}
 				</div>
+
+				{call_hook name="Templates::Catalog::Book::Details::Paperhive"}
+
 				{* langsci: view the code on github *}
 				<div class="item langsci_github">
 					{translate key="plugins.generic.bookPage.latexSource.text"}
