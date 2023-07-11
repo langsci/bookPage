@@ -66,7 +66,7 @@
             {","}{"<br>"}{"doi = "}{ldelim}{$publication->getData('pub-id::doi')}{rdelim}
         {elseif count($publicationFormats)}
             {foreach from=$publicationFormats item="publicationFormat"}
-                {if $publicationFormat->getIsApproved()}
+                {if $publicationFormat->getIsApproved() & $publicationFormat->getLocalizedName() == "PDF"}
                     {foreach from=$pubIdPlugins item=pubIdPlugin}
                         {assign var=pubIdType value=$pubIdPlugin->getPubIdType()}
                         {assign var=storedPubId value=$publicationFormat->getStoredPubId($pubIdType)}
