@@ -38,6 +38,11 @@
                 {$publication->getLocalizedData('title')}
             {/capture}
             {$title|regex_replace:"/\W(\b(?![a-z]+\b|[A-Z]+\b)[a-zA-Z]+)\b/m":' {$1}'}{rdelim}{","}{"<br>"}
+        {"subtitle = "}{ldelim}
+            {capture assign="subtitle"}
+                {$publication->getLocalizedData('subtitle')}
+            {/capture}
+            {$subtitle|regex_replace:"/\W(\b(?![a-z]+\b|[A-Z]+\b)[a-zA-Z]+)\b/m":' {$1}'}{rdelim}{","}{"<br>"}
         {"year = "}{ldelim}
             {if $pubState}
                 {if $pubState == $smarty.const.PUB_STATE_FORTHCOMING}
