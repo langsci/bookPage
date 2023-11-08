@@ -26,23 +26,26 @@
             {rdelim}{",<br>"}
         {/if}
 
+        {capture assign="regexPattern"}
+            {'/((?![a-z\p{Ll}]+|[A-Z]+\b)[a-zA-Z\p{L}]+)/mu'}
+        {/capture}
         {"title = "}{ldelim}
             {capture assign="title"}
                 {if $publication->getLocalizedData('prefix')}
                     {if $pubState}
                         {$pubStateLabel|escape}{$publication->getLocalizedData('prefix')|regex_replace:"/Forthcoming: |Superseded: /":""|escape}{" "}
                     {else}
-                        {$publication->getLocalizedData('prefix')}{" "}
+                        {$publication->getLocalizedData('prefix')|escape}{" "}
                     {/if}
                 {/if}
-                {$publication->getLocalizedData('title')}
+                {$publication->getLocalizedData('title')|escape}
             {/capture}
-            {$title|regex_replace:"/\W(\b(?![a-z]+\b|[A-Z]+\b)[a-zA-Z]+)\b/m":' {$1}'}{rdelim}{","}{"<br>"}
+            {$title|regex_replace:$regexPattern:'{$1}'}{rdelim}{","}{"<br>"}
         {"subtitle = "}{ldelim}
             {capture assign="subtitle"}
-                {$publication->getLocalizedData('subtitle')}
+                {$publication->getLocalizedData('subtitle')|escape}
             {/capture}
-            {$subtitle|regex_replace:"/\W(\b(?![a-z]+\b|[A-Z]+\b)[a-zA-Z]+)\b/m":' {$1}'}{rdelim}{","}{"<br>"}
+            {$subtitle|regex_replace:$regexPattern:'{$1}'}{rdelim}{","}{"<br>"}
         {"year = "}{ldelim}
             {if $pubState}
                 {if $pubState == $smarty.const.PUB_STATE_FORTHCOMING}
@@ -55,13 +58,13 @@
                 {/if}
             {/if}{rdelim}{","}{"<br>"}
         {if $series}
-            {"series = "}{ldelim}{$series->getLocalizedData('title')}{rdelim}{","}{"<br>"}
+            {"series = "}{ldelim}{$series->getLocalizedData('title')|escape}{rdelim}{","}{"<br>"}
             {if $publication->getLocalizedData('seriesPosition')}
-                {"number = "}{ldelim}{$publication->getLocalizedData('seriesPosition')}{rdelim}{","}{"<br>"}
+                {"number = "}{ldelim}{$publication->getLocalizedData('seriesPosition')|escape}{rdelim}{","}{"<br>"}
             {/if}
         {/if}
-        {"address = "}{ldelim}{$currentPress->getData('location')}{rdelim}{","}{"<br>"}
-        {"publisher = "}{ldelim}{$currentPress->getLocalizedData('name')}{rdelim}
+        {"address = "}{ldelim}{$currentPress->getData('location')|escape}{rdelim}{","}{"<br>"}
+        {"publisher = "}{ldelim}{$currentPress->getLocalizedData('name')|escape}{rdelim}
         {if $publication->getData('pub-id::doi')}
             {","}{"<br>"}{"doi = "}{ldelim}{$publication->getData('pub-id::doi')}{rdelim}
         {elseif count($publicationFormats)}
