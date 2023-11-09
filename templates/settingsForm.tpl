@@ -13,7 +13,6 @@
 	{rdelim});
 </script>
 
-{$pluginName}xx
 <form class="pkp_form" id="bookPageSettingsForm" method="post" action="{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="generic" plugin=$pluginName verb="save" save=true}">
 
 	{fbvFormArea id="bookPageSettingsForm" class="border" title="plugins.generic.bookPage.settings.title"}
