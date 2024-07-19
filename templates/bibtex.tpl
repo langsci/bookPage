@@ -4,7 +4,7 @@
             {foreach from=$editors key=id item=editor}
                 {if $editor@first}
                     {"@book{ldelim}"}{$editor->getLocalizedFamilyName()|strip|replace:' ':''}{$publication->getData('datePublished')|date_format:"%Y"}{","}{"<br>"}
-                    {"editor = "}{ldelim}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}{" "}
+                    {"editor = "}{ldelim}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}{if $editor@total != 1}{" "}{/if}
                 {elseif $editor@last && $editor@total != 1}
                     {" and "}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}
                 {else}
@@ -25,7 +25,6 @@
             {/foreach}
             {rdelim}{",<br>"}
         {/if}
-
         {capture assign="regexPattern"}
             {'/((?![a-z\p{Ll}]+|[A-Z]+\b)[a-zA-Z\p{L}]+)/mu'}
         {/capture}
@@ -40,12 +39,15 @@
                 {/if}
                 {$publication->getLocalizedData('title')|escape}
             {/capture}
-            {$title|regex_replace:$regexPattern:'{$1}'}{rdelim}{","}{"<br>"}
-        {"subtitle = "}{ldelim}
-            {capture assign="subtitle"}
-                {$publication->getLocalizedData('subtitle')|escape}
-            {/capture}
+            {$title|regex_replace:$regexPattern:'{$1}'|trim}{rdelim}{","}{"<br>"}
+
+        {capture assign="subtitle"}
+            {$publication->getLocalizedData('subtitle')|escape}
+        {/capture}
+	{if !empty($subtitle)}
+	    {"subtitle = "}{ldelim}
             {$subtitle|regex_replace:$regexPattern:'{$1}'}{rdelim}{","}{"<br>"}
+	{/if}
         {"year = "}{ldelim}
             {if $pubState}
                 {if $pubState == $smarty.const.PUB_STATE_FORTHCOMING}

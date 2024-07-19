@@ -3,6 +3,7 @@
         {foreach from=$editors key=id item=editor}
             {if $editor@first}
                 {$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}
+		{if $editor@total == 1}{" (ed.)"}{/if}
             {elseif $editor@last && $editor@total != 1}
                 {" & "}{$editor->getLocalizedFamilyName()|escape}{", "}{$editor->getLocalizedGivenName()|escape}
                 {if $editor@total != 1}{" (eds.)"}

@@ -99,15 +99,10 @@
 	</h1>
 
 	{* langsci *}
-	<div class="langsci_author">		
+	<div class="langsci_author">
 		{assign var="authors" value=$publication->getData('authors')}
-		{foreach from=$authors key=id item=author}
-			{if $author->getIncludeInBrowse()}
-				{$author->getFullName()|escape}&nbsp;&nbsp;
-			{/if}
-		{/foreach}
+		{$monograph->getAuthorOrEditorString()|escape}
 	</div>
-	
 	{* end langsci *}
 
 	<div class="row">
